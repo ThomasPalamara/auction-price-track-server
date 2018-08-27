@@ -1,28 +1,14 @@
 const rp = require('request-promise');
-const winston = require('../winston');
-const router = require('express').Router();
 const config = require('../config');
 
-router.get('/auctions/:realm', async (req, res) => {
-    let slug = req.params.realm;
+exports.findAuctionsByRealm = async (realm) => {
+    const realmAuctionsUrl = (await fetchRealmAuctionsUrl(realm)).files[0].url;
+    const auctions = (await fetchAuctions(realmAuctionsUrl)).auctions;
 
-    try {
-        const realmAuctionsUrl = (await fetchRealmAuctionsUrl(slug)).files[0].url;
-        const auctions = (await fetchAuctions(realmAuctionsUrl)).auctions;
+    return getPrices(auctions);
+};
 
-        let formatedAuctions = getPrices(auctions);
-
-        res.json(formatedAuctions);
-    }
-    catch (error) {
-        winston.error('Error unknown : ' + error);
-
-        res.statusCode = 500;
-        res.send({message : 'Something bad happened'});
-    }
-});
-
-const fetchRealmAuctionsUrl = (realm) => {
+fetchRealmAuctionsUrl = (realm) => {
     return rp(`${config.blizzardURL}/auction/data/${realm}?locale=fr_FR&apikey=${config.apiKey}`, {json: true})
 };
 
@@ -79,5 +65,3 @@ const getPrices = (auctions) => {
 
     return data;
 };
-
-module.exports = router;
