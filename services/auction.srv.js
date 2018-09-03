@@ -2,10 +2,19 @@ const rp = require('request-promise');
 const config = require('../config');
 
 exports.findAuctionsByRealm = async (realm) => {
+    console.time("featchUrl");
     const realmAuctionsUrl = (await fetchRealmAuctionsUrl(realm)).files[0].url;
-    const auctions = (await fetchAuctions(realmAuctionsUrl)).auctions;
+    console.timeEnd("featchUrl");
 
-    return getPrices(auctions);
+    console.time("featchFile");
+    const auctions = (await fetchAuctions(realmAuctionsUrl)).auctions;
+    console.timeEnd("featchFile");
+
+    console.time("format Prices");
+    const prices = getPrices(auctions);
+    console.timeEnd("format Prices");
+
+    return prices;
 };
 
 fetchRealmAuctionsUrl = (realm) => {
