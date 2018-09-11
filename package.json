@@ -5,7 +5,7 @@
     "app-root-path": "^2.1.0",
     "cors": "^2.8.4",
     "express": "^4.16.2",
-    "mongoose": "^5.2.7",
+    "mongoose": "^5.2.8",
     "morgan": "^1.9.0",
     "nodemon": "^1.18.3",
     "request": "^2.87.0",
