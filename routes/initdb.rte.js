@@ -1,8 +1,9 @@
 const router = require('express').Router();
+const wrapAsync = require('../utils/wrapasync');
 const initDbController = require('../controllers/initdb.ctl');
 
-router.get('/items', initDbController.storeItems);
+router.get('/items', wrapAsync(initDbController.storeItems));
 
-router.get('/realms', initDbController.storeRealms);
+router.get('/realms', wrapAsync(initDbController.storeRealms));
 
 module.exports = router;
