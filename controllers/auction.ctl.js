@@ -1,5 +1,5 @@
 const auctionService = require('../services/auction.srv');
-const winston = require('../winston');
+const winston = require('../config/winston');
 
 exports.getAuctions = async (req, res) => {
     let realm = req.params.realm;
