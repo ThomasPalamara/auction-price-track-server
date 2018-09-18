@@ -1,7 +1,7 @@
 const Realm = require("../models/realm");
 const rp = require('request-promise');
-const config = require('../config');
-const winston = require('../winston');
+const constants = require('../config/constants');
+const winston = require('../config/winston');
 
 exports.findAll = () => {
     return Realm.find();
@@ -19,7 +19,7 @@ exports.processRealms = async () => {
 };
 
 const fetchRealms = () => {
-    return rp(`${config.blizzardURL}/realm/status?locale=en_GB&apikey=${config.apiKey}`, {json: true})
+    return rp(`${constants.blizzardURL}/realm/status?locale=en_GB&apikey=${constants.apiKey}`, {json: true})
 };
 
 const processRealm = async (realm) => {

@@ -1,7 +1,7 @@
 const Item = require("../models/item");
 const rp = require('request-promise');
-const config = require('../config');
-const winston = require('../winston');
+const constants = require('../config/constants');
+const winston = require('../config/winston');
 
 exports.findAll = () => {
     return Item.find();
@@ -47,11 +47,11 @@ const processItem = async (itemId) => {
 };
 
 const fetchItem = (itemId) => {
-    return rp(`${config.blizzardURL}/item/${itemId}?locale=en_GB&apikey=${config.apiKey}`, {json: true});
+    return rp(`${constants.blizzardURL}/item/${itemId}?locale=en_GB&apikey=${constants.apiKey}`, {json: true});
 };
 
 const fetchItemFr = (itemId) => {
-    return rp(`${config.blizzardURL}/item/${itemId}?locale=fr_FR&apikey=${config.apiKey}`, {json: true});
+    return rp(`${constants.blizzardURL}/item/${itemId}?locale=fr_FR&apikey=${constants.apiKey}`, {json: true});
 };
 
 const saveItem = (item, itemFr) => {

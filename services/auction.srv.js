@@ -1,5 +1,5 @@
 const rp = require('request-promise');
-const config = require('../config');
+const constants = require('../config/constants');
 
 exports.findAuctionsByRealm = async (realm) => {
     console.time("featchUrl");
@@ -18,7 +18,7 @@ exports.findAuctionsByRealm = async (realm) => {
 };
 
 fetchRealmAuctionsUrl = (realm) => {
-    return rp(`${config.blizzardURL}/auction/data/${realm}?locale=fr_FR&apikey=${config.apiKey}`, {json: true})
+    return rp(`${constants.blizzardURL}/auction/data/${realm}?locale=fr_FR&apikey=${constants.apiKey}`, {json: true})
 };
 
 const fetchAuctions = (auctionsUrl) => {

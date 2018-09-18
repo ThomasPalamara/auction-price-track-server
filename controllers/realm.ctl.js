@@ -1,5 +1,5 @@
 const realmService = require('../services/realm.srv');
-const winston = require('../winston');
+const winston = require('../config/winston');
 
 exports.getRealms = async (req, res) => {
     try{

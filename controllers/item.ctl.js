@@ -1,5 +1,5 @@
 const itemService = require('../services/item.srv');
-const winston = require('../winston');
+const winston = require('../config/winston');
 
 exports.getItems = async (req, res) => {
     try {
