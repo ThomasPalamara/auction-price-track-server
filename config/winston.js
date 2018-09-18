@@ -1,23 +1,25 @@
 const winston = require('winston');
 
-const consoleFormat = winston.format.printf(({timestamp, level, message}) => {
+const customFormat = winston.format.printf(({timestamp, level, message}) => {
     return `${timestamp} - ${level}: ${message}`;
 });
 
 const logger = winston.createLogger({
     level: 'debug',
     transports: [
-        new winston.transports.Console(),
+        new winston.transports.Console({
+            format: winston.format.simple(),
+        }),
         new winston.transports.File({ 
-            filename: 'log/server.log',
+            filename: 'logs/server.log',
             maxsize: 5242880, // 5MB
             maxFiles: 10,
+            format: winston.format.combine(
+                winston.format.timestamp(),
+                customFormat,
+            ),
         })
-    ],
-    format: winston.format.combine(
-        winston.format.timestamp(),
-        consoleFormat,
-    ),
+    ]
 });
 
 
