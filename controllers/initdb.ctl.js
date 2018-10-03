@@ -1,19 +1,15 @@
 const itemService = require('../services/item.srv');
 const realmService = require('../services/realm.srv');
+const recipeService = require('../services/recipe.srv');
 
-exports.storeItems = (req, res) => {
-    const start = req.query.start || 1;
-    const end = req.query.end || 10000;
+exports.initRealms =  async (req, res) => {
+    await realmService.initRealmCollection();
 
-    itemService.processWowItems(start, end);
-
-    //Since it may take too much time to process every items, we only respond when the process has started and not when it's over.
-    res.send({message: "Initialization of items started"});
+    res.send({message: "Initialization of realms finished successfully"});
 };
 
-exports.storeRealms =  (req, res) => {
-    realmService.processRealms();
+exports.initRecipes =  async (req, res) => {
+    await recipeService.initRecipeCollection(req.query.cleanitemcollection);
 
-    //Since it may take too much time to process every realms, we only respond when the process has started and not when it's over.
-    res.send({message: "Initialization of realms started"});
+    res.send({message: "Initialization of recipes finished successfully"});
 };

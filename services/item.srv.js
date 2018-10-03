@@ -7,70 +7,59 @@ exports.findAll = () => {
     return Item.find();
 };
 
-exports.processWowItems = (itemId, maxItemId) => {
-    processItem(itemId);
-
-    itemId++;
-
-    //Pessimistic management of blizzard API usage limits
-    if (itemId % 18000 === 0) {
-        //We wait a bit more than 1 hour for safety
-        return setTimeout(() => exports.processWowItems(itemId, maxItemId), 3602000);
-    }
-    if (itemId % 50 === 0) {
-        return setTimeout(() => exports.processWowItems(itemId, maxItemId), 2000);
-    }
-    if (itemId <= maxItemId) {
-        return exports.processWowItems(itemId, maxItemId);
-    }
-};
-
-const processItem = async (itemId) => {
+exports.storeItem = async (itemId) => {
     try {
-        const item = await fetchItem(itemId);
+        const itemPromise = fetchItem(itemId);
+        const itemFrPromise = fetchItemFr(itemId);
 
-        //We only save items that are marketable
-        if(item.isAuctionable){
-            const itemFr = await fetchItemFr(itemId);
+        const [item, itemFr] = await Promise.all([itemPromise, itemFrPromise]);
 
-            const savedItem = await saveItem(item, itemFr);
+        const savedItem = await saveItem(item, itemFr);
 
-            winston.info(`Found and saved: ${JSON.stringify(savedItem)}`);
-        }
-        else{
-            winston.info(`Found but not saved: ${itemId}`);
-        }
+        winston.debug(`Saved item ${savedItem.name_fr}`);
+
+        return savedItem;
     }
     catch (error) {
         logItemError(error, itemId);
+
+        throw error;
     }
 };
 
-const fetchItem = (itemId) => {
-    return rp(`${constants.blizzardURL}/item/${itemId}?locale=en_GB&apikey=${constants.apiKey}`, {json: true});
+exports.findByBlizzardId = async (blizzardId) => {
+    return Item.findOne({ blizzardId: blizzardId });
 };
 
-const fetchItemFr = (itemId) => {
-    return rp(`${constants.blizzardURL}/item/${itemId}?locale=fr_FR&apikey=${constants.apiKey}`, {json: true});
+
+exports.cleanItemCollection = async () => {
+    await Item.remove({});
 };
 
-const saveItem = (item, itemFr) => {
+const fetchItem = async (itemId) => {
+    return rp(`${constants.blizzardURL}/item/${itemId}?locale=en_GB&apikey=${constants.apiKey}`, { json: true });
+};
+
+const fetchItemFr = async (itemId) => {
+    return rp(`${constants.blizzardURL}/item/${itemId}?locale=fr_FR&apikey=${constants.apiKey}`, { json: true });
+};
+
+const saveItem = async (item, itemFr) => {
     const itemModel = new Item({
-        id: item.id,
+        blizzardId: item.id,
         name: item.name,
         name_fr: itemFr.name,
     });
 
-    return itemModel.save();
+    return await itemModel.save();
 };
 
 const logItemError = (error, itemId) => {
     if (error.statusCode === 404) {
-        winston.info(`Item ${itemId} not found`);
+        winston.error(`Item ${itemId} not found`);
     } else if (error.statusCode === 403) {
         winston.error(`API limits' reached for item ${itemId}`);
     } else {
         winston.error('Error unknown for item ' + itemId + ' : ' + error);
     }
 };
-

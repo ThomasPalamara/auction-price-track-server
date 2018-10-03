@@ -7,15 +7,22 @@ exports.findAll = () => {
     return Realm.find();
 };
 
-exports.processRealms = async () => {
-
+exports.initRealmCollection = async () => {
     const realms = (await fetchRealms()).realms;
 
-    for (let index = 0; index < realms.length; index++) {
-        let realm = realms[index];
+    await removeRealmCollection();
 
-        processRealm(realm);
+    const realmPromises = [];
+
+    for (let index = 0; index < realms.length; index++) {
+        realmPromises.push(processRealm(realms[index]));
     }
+
+    return Promise.all(realmPromises);
+};
+
+const removeRealmCollection = () => {
+    return Realm.collection.drop();
 };
 
 const fetchRealms = () => {
@@ -25,19 +32,23 @@ const fetchRealms = () => {
 const processRealm = async (realm) => {
     try {
         if (realm.locale === "fr_FR") {
-            const savedRealm = await saveRealm(realm);
-            winston.info(`Found and saved: ${JSON.stringify(savedRealm)}`);
+            let savedRealm = await saveRealm(realm);
+            winston.info(`Saved realm ${savedRealm.name}`);
+
+            return savedRealm;
         }
     }
     catch (error) {
-        winston.error('Error unknown for realm ' + realm.slug + ' : ' + error);
+        winston.error('Error unknown for realm ' + realm.name + ' : ' + error);
+
+        throw new Error('Initialization of realm collection failed');
     }
 };
 
 const saveRealm = (realm) => {
     const realmModel = new Realm({
-        value: realm.slug,
-        label: realm.name,
+        slug: realm.slug,
+        name: realm.name,
     });
 
     return realmModel.save();

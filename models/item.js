@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const ItemSchema = new Schema({
+const itemSchema = new Schema({
     name: String,
     name_fr: String,
-    id: { type : Number , unique : true, required : true },
+    blizzardId: { type : Number , unique : true, required : true },
 });
 
-const Item = mongoose.model('item', ItemSchema);
+const Item = mongoose.model('item', itemSchema);
 
 module.exports = Item;
