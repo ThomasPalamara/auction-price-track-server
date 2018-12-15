@@ -1,5 +1,6 @@
 const rp = require('request-promise');
 const constants = require('../config/constants');
+const itemService = require('./item.srv');
 
 exports.findAuctionsByRealm = async (realm) => {
     console.time("featchUrl");
@@ -25,7 +26,7 @@ const fetchAuctions = (auctionsUrl) => {
     return rp(auctionsUrl, {json: true})
 };
 
-const getPrices = (auctions) => {
+const getPricesOld = (auctions) => {
     let formatedAuctions = {};
 
     auctions.forEach(auction => {
@@ -73,4 +74,53 @@ const getPrices = (auctions) => {
     }
 
     return data;
+};
+
+const getPrices = async (auctions) => {
+
+    const blizzardIds = await itemService.findAllBlizzardIds();
+    const itemIds = formatIds(blizzardIds);
+
+    aggregateByItemId(auctions, itemIds);
+};
+
+const aggregateByItemId = (auctions, itemIds) => {
+    const aggregatedAuctions = {};
+
+    auctions.forEach(auction => {
+        console.log(auction);
+
+        let unitPrice = Math.round(auction.buyout / auction.quantity);
+
+        if (auction.buyout > 0 && itemIds.includes(auction.item)) {
+            formatedAuctions[auction.item].total_quantity += auction.quantity;
+        }
+
+
+        //     let formatedAuction = formatedAuctions[auction.item].prices.find(formatedAuction => formatedAuction.price === unitPrice);
+
+        //     if (formatedAuction) {
+        //         formatedAuction.quantity += auction.quantity;
+        //     }
+        //     else {
+        //         formatedAuction = {
+        //             price: unitPrice,
+        //             quantity: auction.quantity
+        //         };
+
+        //         formatedAuctions[auction.item].prices.push(formatedAuction);
+        //     }
+        // }
+    });
+
+};
+
+const formatIds = (blizzardIds) => {
+    const formatedResult = []
+
+    for (let value of blizzardIds) {
+        formatedResult.push(value.blizzardId);
+    };
+
+    return formatedResult;
 };
