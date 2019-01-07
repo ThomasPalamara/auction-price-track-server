@@ -4,6 +4,4 @@ const recipeController = require('../controllers/recipe.ctl');
 
 router.get('/', wrapAsync(recipeController.getRecipes));
 
-router.get('/test', wrapAsync(recipeController.test));
-
 module.exports = router;
