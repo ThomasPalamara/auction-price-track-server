@@ -1,4 +1,5 @@
 const AuctionData = require("../models/auctionData");
+const AuctionInformation = require("../models/auctionInformation");
 const rp = require('request-promise');
 const constants = require('../config/constants');
 const itemService = require('./item.srv');
@@ -29,13 +30,43 @@ exports.refreshAuctionsData = async () => {
 };
 
 const fetchAndSaveAuctionsData = async (realm) => {
-    const {url, lastModified} = (await fetchRealmAuctionsUrl(realm)).files[0];
+    const { lastSaved } = await getLastSavedDate(realm);
+
+    const { url, lastModified } = (await fetchRealmAuctionsUrl(realm)).files[0];
+
+    if( lastSaved.getTime() === lastModified ) {
+        console.log(`Auctions for realm ${realm} are already up to date`);
+
+        return;
+    }
 
     const auctions = (await fetchAuctions(url)).auctions;
 
     const aggregatedAuctions = await aggregateByItem(auctions, realm, lastModified);
 
-    return computeAndSaveStats(aggregatedAuctions, realm, lastModified);
+    await computeAndSaveStats(aggregatedAuctions, realm, lastModified);
+
+    return updateLastSavedDate(lastModified, realm);
+};
+
+const getLastSavedDate = (realm) => {
+    return AuctionInformation.findOne({ 'realm' : realm });
+};
+
+const updateLastSavedDate = async (date, realm) => {
+    let auctionInformation = await getLastSavedDate(realm);
+
+    if( auctionInformation ) {
+        auctionInformation.lastSaved = date;
+    }
+    else {
+        auctionInformation = new AuctionInformation({
+            realm: realm,
+            lastSaved: date,
+        });
+    }
+
+    return auctionInformation.save();
 };
 
 const fetchRealmAuctionsUrl = (realm) => {

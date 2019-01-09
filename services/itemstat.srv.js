@@ -23,7 +23,7 @@ exports.saveItemStat = (itemId, itemStat, realm, timestamp) => {
 };
 
 /**
- * Compute statistics for all auctions in parameters
+ * Compute statistics for all auctions in arguments
  * @param auctions array of auctions. The parameter must be an array objects which all have the properties unitPrice and quantity
  * @return an object containing the average price, max price and min price
  */
