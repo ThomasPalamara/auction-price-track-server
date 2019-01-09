@@ -1,322 +1,583 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
-  description: ""
-  version: "0.1.0"
-  title: "Auction Price Tracker API"
-host: "auction-price-track-server.herokuapp.com"
-basePath: "/api"
+  description: ''
+  version: 0.1.0
+  title: Auction Price Tracker API
+host: auction-price-track-server.herokuapp.com
+basePath: /api
 schemes:
-- "https"
+  - https
 paths:
   /recipes:
     get:
       tags:
-      - "recipes"
-      summary: "Gets all recipes managed by Auction Price Tracker"
-      description: ""
-      operationId: "getRecipes"
+        - recipes
+      summary: Gets all recipes managed by Auction Price Tracker
+      description: ''
+      operationId: getRecipes
       produces:
-      - "application/json"
+        - application/json
       responses:
-        200:
-          description: "Operation successful"
+        '200':
+          description: Operation successful
           schema:
-            type: "array"
+            type: array
             items:
-              $ref: "#/definitions/Recipe"
+              $ref: '#/definitions/Recipe'
             example:
-            - isCustom: true
-              professions:
-                - alchemy
-                - inscription
-              _id: 5bad6b59dcf0e92f30d04312
-              reagents:
-                - _id: 5bad6b59dcf0e92f30d04319
-                  blizzardId: 152510
+              - isCustom: true
+                professions:
+                  - alchemy
+                  - inscription
+                _id: 5bad6b59dcf0e92f30d04312
+                reagents:
+                  - _id: 5bad6b59dcf0e92f30d04319
+                    blizzardId: 152510
+                    quantity: 1
+                    name: Anchor Weed
+                    name_fr: Ancoracée
+                  - _id: 5bad6b59dcf0e92f30d04318
+                    blizzardId: 152507
+                    quantity: 1
+                    name: Akunda's Bite
+                    name_fr: Mâche d’Akunda
+                  - _id: 5bad6b59dcf0e92f30d04317
+                    blizzardId: 152511
+                    quantity: 1
+                    name: Sea Stalk
+                    name_fr: Brin-de-mer
+                  - _id: 5bad6b59dcf0e92f30d04316
+                    blizzardId: 152508
+                    quantity: 1
+                    name: Winter's Kiss
+                    name_fr: Bise-d’hiver
+                  - _id: 5bad6b59dcf0e92f30d04315
+                    blizzardId: 152505
+                    quantity: 1
+                    name: Riverbud
+                    name_fr: Rivebulbe
+                  - _id: 5bad6b59dcf0e92f30d04314
+                    blizzardId: 152509
+                    quantity: 1
+                    name: Siren's Pollen
+                    name_fr: Pollen de sirène
+                  - _id: 5bad6b59dcf0e92f30d04313
+                    blizzardId: 152506
+                    quantity: 1
+                    name: Star Moss
+                    name_fr: Mousse étoilée
+                __v: 0
+              - isCustom: false
+                professions:
+                  - alchemy
+                _id: 5bad6b59dcf0e92f30d0431b
+                type: flask
+                craft:
+                  _id: 5bad6b59dcf0e92f30d0431c
+                  blizzardId: 152641
                   quantity: 1
-                  name: Anchor Weed
-                  name_fr: Ancoracée
-                - _id: 5bad6b59dcf0e92f30d04318
-                  blizzardId: 152507
-                  quantity: 1
-                  name: Akunda's Bite
-                  name_fr: Mâche d’Akunda
-                - _id: 5bad6b59dcf0e92f30d04317
-                  blizzardId: 152511
-                  quantity: 1
-                  name: Sea Stalk
-                  name_fr: Brin-de-mer
-                - _id: 5bad6b59dcf0e92f30d04316
-                  blizzardId: 152508
-                  quantity: 1
-                  name: Winter's Kiss
-                  name_fr: Bise-d’hiver
-                - _id: 5bad6b59dcf0e92f30d04315
-                  blizzardId: 152505
-                  quantity: 1
-                  name: Riverbud
-                  name_fr: Rivebulbe
-                - _id: 5bad6b59dcf0e92f30d04314
-                  blizzardId: 152509
-                  quantity: 1
-                  name: Siren's Pollen
-                  name_fr: Pollen de sirène
-                - _id: 5bad6b59dcf0e92f30d04313
-                  blizzardId: 152506
-                  quantity: 1
-                  name: Star Moss
-                  name_fr: Mousse étoilée
-              __v: 0
-            - isCustom: false
-              professions:
-                - alchemy
-              _id: 5bad6b59dcf0e92f30d0431b
-              type: flask
-              craft:
-                _id: 5bad6b59dcf0e92f30d0431c
-                blizzardId: 152641
-                quantity: 1
-                name: Flask of the Undertow
-                name_fr: Flacon du ressac
-              reagents:
-                - _id: 5bad6b59dcf0e92f30d0431f
-                  blizzardId: 152510
-                  quantity: 5
-                  name: Anchor Weed
-                  name_fr: Ancoracée
-                - _id: 5bad6b59dcf0e92f30d0431e
-                  blizzardId: 152507
-                  quantity: 10
-                  name: Akunda's Bite
-                  name_fr: Mâche d’Akunda
-                - _id: 5bad6b59dcf0e92f30d0431d
-                  blizzardId: 152509
-                  quantity: 15
-                  name: Siren's Pollen
-                  name_fr: Pollen de sirène
-              __v: 0
-        500:
-          description: "Server broken"
+                  name: Flask of the Undertow
+                  name_fr: Flacon du ressac
+                reagents:
+                  - _id: 5bad6b59dcf0e92f30d0431f
+                    blizzardId: 152510
+                    quantity: 5
+                    name: Anchor Weed
+                    name_fr: Ancoracée
+                  - _id: 5bad6b59dcf0e92f30d0431e
+                    blizzardId: 152507
+                    quantity: 10
+                    name: Akunda's Bite
+                    name_fr: Mâche d’Akunda
+                  - _id: 5bad6b59dcf0e92f30d0431d
+                    blizzardId: 152509
+                    quantity: 15
+                    name: Siren's Pollen
+                    name_fr: Pollen de sirène
+                __v: 0
+        '500':
+          description: Server broken
           schema:
-            type: "object"
+            type: object
             properties:
               message:
                 type: string
-                example: "Unfortunate things happened"
+                example: Unfortunate things happened
   /items:
     get:
       tags:
-      - "items"
-      summary: "Gets all items managed by Auction Price Tracker"
-      operationId: "getItems"
+        - items
+      summary: Gets all items managed by Auction Price Tracker
+      operationId: getItems
       produces:
-      - "application/json"
+        - application/json
       responses:
-        200:
-          description: "Operation successful"
+        '200':
+          description: Operation successful
           schema:
-            type: "array"
+            type: array
             items:
-              $ref: "#/definitions/Item"
+              $ref: '#/definitions/Item'
             example:
-            - _id: 5bad6b58dcf0e92f30d0430b
-              blizzardId: 152510
-              name: Anchor Weed
-              name_fr: Ancoracée
-              __v: 0
-            - _id: 5bad6b58dcf0e92f30d0430c
-              blizzardId: 152507
-              name: Akunda's Bite
-              name_fr: Mâche d’Akunda
-              __v: 0
-        500:
-          description: "Server broken"
+              - _id: 5bad6b58dcf0e92f30d0430b
+                blizzardId: 152510
+                name: Anchor Weed
+                name_fr: Ancoracée
+                __v: 0
+              - _id: 5bad6b58dcf0e92f30d0430c
+                blizzardId: 152507
+                name: Akunda's Bite
+                name_fr: Mâche d’Akunda
+                __v: 0
+        '500':
+          description: Server broken
           schema:
-            type: "object"
+            type: object
             properties:
               message:
                 type: string
-                example: "Unfortunate things happened"
+                example: Unfortunate things happened
   /realms:
     get:
       tags:
-      - "realms"
-      summary: "Gets all realms managed by Auction Price Tracker"
-      description: ""
-      operationId: "getRealms"
+        - realms
+      summary: Gets all realms managed by Auction Price Tracker
+      operationId: getRealms
       produces:
-      - "application/json"
+        - application/json
       responses:
-        200:
-          description: "Operation successful"
+        '200':
+          description: Operation successful
           schema:
-            type: "array"
+            type: array
             items:
-              $ref: "#/definitions/Realm"
+              $ref: '#/definitions/Realm'
             example:
-            - _id: 5b82db8eaf83190564444808
-              value: arakarahm
-              label: Arak-arahm
-              __v: 0
-            - _id: 5b82db8eaf83190564444809
-              value: arathi
-              label: Arathi
-              __v: 0
-            - _id: 5b82db8eaf8319056444480a
-              value: archimonde
-              label: Archimonde
-              __v: 0
-
-        500:
-          description: "Server broken"
+              - _id: 5b82db8eaf83190564444808
+                value: arakarahm
+                label: Arak-arahm
+                __v: 0
+              - _id: 5b82db8eaf83190564444809
+                value: arathi
+                label: Arathi
+                __v: 0
+              - _id: 5b82db8eaf8319056444480a
+                value: archimonde
+                label: Archimonde
+                __v: 0
+        '500':
+          description: Server broken
           schema:
-            type: "object"
+            type: object
             properties:
               message:
                 type: string
-                example: "Unfortunate things happened"
+                example: Unfortunate things happened
+  /auctions:
+    get:
+      tags:
+        - auctions
+      summary: Gets all auctions for a specific item in a realm
+      parameters:
+        - in: path
+          name: realm
+          required: true
+          type: string
+          minimum: 1
+          description: the realm to get the auctions from.
+        - in: path
+          name: itemId
+          required: true
+          type: integer
+          minimum: 2
+          description: the item to get the auctions for.
+        - in: query
+          name: start
+          required: false
+          type: integer
+          description: start timestamp parameter for the search. If not specified, it starts 24 hours before the call timestamp
+        - in: query
+          name: end
+          required: false
+          type: integer
+          description: end timestamp parameter for the search. If not specified, it ends at the call timestamp
+      operationId: getAuctions
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operation successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AuctionData'
+            example:
+              - _id: 5c349c376acb5d094ce19c0d
+                itemId: 152507
+                auctions:
+                  - _id: 5c349c376acb5d094ce19c19
+                    unitPrice: 337000
+                    quantity: 36
+                  - _id: 5c349c376acb5d094ce19c18
+                    unitPrice: 335000
+                    quantity: 5
+                  - _id: 5c349c376acb5d094ce19c17
+                    unitPrice: 338000
+                    quantity: 3
+                  - _id: 5c349c376acb5d094ce19c16
+                    unitPrice: 385110
+                    quantity: 80
+                  - _id: 5c349c376acb5d094ce19c15
+                    unitPrice: 318182
+                    quantity: 55
+                  - _id: 5c349c376acb5d094ce19c14
+                    unitPrice: 382500
+                    quantity: 180
+                  - _id: 5c349c376acb5d094ce19c13
+                    unitPrice: 350000
+                    quantity: 30
+                  - _id: 5c349c376acb5d094ce19c12
+                    unitPrice: 336000
+                    quantity: 13
+                  - _id: 5c349c376acb5d094ce19c11
+                    unitPrice: 337990
+                    quantity: 11
+                  - _id: 5c349c376acb5d094ce19c10
+                    unitPrice: 998999
+                    quantity: 800
+                  - _id: 5c349c376acb5d094ce19c0f
+                    unitPrice: 339000
+                    quantity: 19
+                  - _id: 5c349c376acb5d094ce19c0e
+                    unitPrice: 399999
+                    quantity: 200
+                timestamp: '2019-01-08T12:07:32.000Z'
+                realm: chogall
+                __v: 0
+              - _id: 5c349f38e5c26834a4494183
+                itemId: 152507
+                auctions:
+                  - _id: 5c349f38e5c26834a4494191
+                    unitPrice: 337000
+                    quantity: 36
+                  - _id: 5c349f38e5c26834a4494190
+                    unitPrice: 335000
+                    quantity: 5
+                  - _id: 5c349f38e5c26834a449418f
+                    unitPrice: 317000
+                    quantity: 100
+                  - _id: 5c349f38e5c26834a449418e
+                    unitPrice: 338000
+                    quantity: 3
+                  - _id: 5c349f38e5c26834a449418d
+                    unitPrice: 385110
+                    quantity: 80
+                  - _id: 5c349f38e5c26834a449418c
+                    unitPrice: 318182
+                    quantity: 55
+                  - _id: 5c349f38e5c26834a449418b
+                    unitPrice: 382500
+                    quantity: 180
+                  - _id: 5c349f38e5c26834a449418a
+                    unitPrice: 316000
+                    quantity: 10
+                  - _id: 5c349f38e5c26834a4494189
+                    unitPrice: 350000
+                    quantity: 30
+                  - _id: 5c349f38e5c26834a4494188
+                    unitPrice: 336000
+                    quantity: 13
+                  - _id: 5c349f38e5c26834a4494187
+                    unitPrice: 337990
+                    quantity: 11
+                  - _id: 5c349f38e5c26834a4494186
+                    unitPrice: 998999
+                    quantity: 800
+                  - _id: 5c349f38e5c26834a4494185
+                    unitPrice: 339000
+                    quantity: 19
+                  - _id: 5c349f38e5c26834a4494184
+                    unitPrice: 399999
+                    quantity: 200
+                timestamp: '2019-01-08T13:00:32.000Z'
+                realm: chogall
+                __v: 0
+        '500':
+          description: Server broken
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Unfortunate things happened
+  /itemstats:
+    get:
+      tags:
+        - itemstats
+      summary: Gets all item statistics for a specific item in a realm
+      parameters:
+        - in: path
+          name: realm
+          required: true
+          type: string
+          minimum: 1
+          description: the realm to get the itemstats from.
+        - in: path
+          name: itemId
+          required: true
+          type: integer
+          minimum: 2
+          description: the item to get the itemstats for.
+        - in: query
+          name: start
+          required: false
+          type: integer
+          description: start timestamp parameter for the search. If not specified, it starts 24 hours before the call timestamp
+        - in: query
+          name: end
+          required: false
+          type: integer
+          description: end timestamp parameter for the search. If not specified, it ends at the call timestamp
+      operationId: getItemStats
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Operation successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ItemStat'
+            example:
+              - _id: 5c349c396acb5d094ce19d62
+                itemId: 152507
+                minPrice: 318182
+                averagePrice: 723607.3324022347
+                maxPrice: 998999
+                timestamp: '2019-01-08T12:07:32.000Z'
+                realm: chogall
+                __v: 0
+              - _id: 5c349f39e5c26834a44942dc
+                itemId: 152507
+                minPrice: 316000
+                averagePrice: 694595.1361867704
+                maxPrice: 998999
+                timestamp: '2019-01-08T13:00:32.000Z'
+                realm: chogall
+                __v: 0
+              - _id: 5c34baf3673b7618dcb5cca7
+                itemId: 152507
+                minPrice: 336000
+                averagePrice: 695249.5205047319
+                maxPrice: 998999
+                timestamp: '2019-01-08T14:46:32.000Z'
+                realm: chogall
+                __v: 0
+              - _id: 5c34d711673b7618dcb61ff3
+                itemId: 152507
+                minPrice: 336000
+                averagePrice: 695249.5205047319
+                maxPrice: 998999
+                timestamp: '2019-01-08T16:32:32.000Z'
+                realm: chogall
+                __v: 0
+        '500':
+          description: Server broken
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Unfortunate things happened
   /initdb/realms:
     post:
       tags:
-      - "initdb"
-      summary: "Clean and initialize the realm collection of the Auction Price Tracker's database"
-      operationId: "initRealms"
+        - initdb
+      summary: >-
+        Clean and initialize the realm collection of the Auction Price Tracker's
+        database
+      operationId: initRealms
       produces:
-      - "application/json"
+        - application/json
       responses:
-        200:
-          description: "Operation successful"
+        '200':
+          description: Operation successful
           schema:
-            type: "object"
+            type: object
             properties:
               message:
                 type: string
-                example: "Initialization of realms finished successfully"
-        500:
-          description: "Server broken"
+                example: Initialization of realms finished successfully
+        '500':
+          description: Server broken
           schema:
-            type: "object"
+            type: object
             properties:
               message:
                 type: string
-                example: "Unfortunate things happened"
+                example: Unfortunate things happened
   /initdb/recipes:
     post:
       tags:
-      - "initdb"
-      summary: "Initialize the recipe and item collections of the Auction Price Tracker's database"
+        - initdb
+      summary: >-
+        Initialize the recipe and item collections of the Auction Price
+        Tracker's database
       parameters:
         - name: cleanitemcollection
           in: query
           description: clean the item collection ?
           type: boolean
-      operationId: "initRecipes"
+      operationId: initRecipes
       produces:
-      - "application/json"
+        - application/json
       responses:
-        200:
-          description: "Operation successful"
+        '200':
+          description: Operation successful
           schema:
-            type: "object"
+            type: object
             properties:
               message:
                 type: string
-                example: "Initialization of recipes finished successfully"
-        500:
-          description: "Server broken"
+                example: Initialization of recipes finished successfully
+        '500':
+          description: Server broken
           schema:
-            type: "object"
+            type: object
             properties:
               message:
                 type: string
-                example: "Unfortunate things happened"
+                example: Unfortunate things happened
 definitions:
   Item:
-    type: "object"
+    type: object
     properties:
       _id:
-        type: "string"
+        type: string
       blizzardId:
-        type: "integer"
+        type: integer
       name:
-        type: "string"
+        type: string
       name_fr:
-        type: "string"
+        type: string
       __v:
-        type: "integer"
+        type: integer
   Realm:
-    type: "object"
+    type: object
     properties:
       _id:
-        type: "string"
-      value:
-        type: "string"
-      label:
-        type: "string"
+        type: string
+      slug:
+        type: string
+      name:
+        type: string
       __v:
-        type: "integer"
+        type: integer
   Recipe:
-    type: "object"
+    type: object
     properties:
       _id:
-        type: "string"
+        type: string
       isCustom:
-        type: "boolean"
+        type: boolean
       professions:
-        type: "array"
+        type: array
         items:
-          type: "string"
+          type: string
           enum:
-            - "alchemy"
-            - "blacksmithing"
-            - "enchant"
-            - "engineering"
-            - "herbalism"
-            - "inscription"
-            - "jewelcrafting"
-            - "leatherworking"
-            - "mining"
-            - "skinning"
-            - "tailoring"
-            - "cooking"
+            - alchemy
+            - blacksmithing
+            - enchant
+            - engineering
+            - herbalism
+            - inscription
+            - jewelcrafting
+            - leatherworking
+            - mining
+            - skinning
+            - tailoring
+            - cooking
       type:
-        type: "string"
+        type: string
         enum:
-          - "flask"
-          - "potion"
-          - "ring"
-          - "weapon"
-          - "gem"
-          - "war scroll"
-          - "vantus"
-          - "tome"
+          - flask
+          - potion
+          - ring
+          - weapon
+          - gem
+          - war scroll
+          - vantus
+          - tome
       craft:
-        type: "object"
+        type: object
         properties:
           _id:
-            type: "string"
+            type: string
           blizzardId:
-            type: "integer"
+            type: integer
           quantity:
-            type: "integer"
+            type: integer
           name:
-            type: "string"
+            type: string
           name_fr:
-            type: "string"
+            type: string
       reagents:
-        type: "array"
+        type: array
         items:
-          type: "object"
+          type: object
           properties:
             _id:
-              type: "string"
+              type: string
             blizzardId:
-              type: "integer"
+              type: integer
             quantity:
-              type: "integer"
+              type: integer
             name:
-              type: "string"
+              type: string
             name_fr:
-              type: "string"
+              type: string
       __v:
-        type: "integer"
+        type: integer
+  ItemStat:
+    type: object
+    properties:
+      _id:
+        type: string
+      itemId:
+        type: integer
+      minPrice:
+        type: integer
+      maxPrice:
+        type: integer
+      averagePrice:
+        type: integer
+      timestamp:
+        type: string
+        description: "A timestamp in the ISO Format"
+      realm:
+        type: string
+      __v:
+        type: integer
+  AuctionData:
+    type: object
+    properties:
+      _id:
+        type: string
+      itemId:
+        type: integer
+      auctions:
+        type: array
+        items:
+          type: object
+          properties:
+            unitPrice:
+              type: integer
+            quantity:
+              type: integer
+      timestamp:
+        type: string
+        description: "A timestamp in the ISO Format"
+      realm:
+        type: string
+      __v:
+        type: integer
