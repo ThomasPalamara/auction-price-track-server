@@ -1,13 +1,7 @@
-const auctionService = require('../services/auction.srv');
+const itemStatService = require('../services/itemstat.srv');
 const { yesterdayTimestamp } = require('../utils/dateUtils');
 
-exports.refreshAuctions = async (req, res) => {
-    await auctionService.refreshAuctionsData();
-
-    res.json({message: "Auctions up to date"});
-};
-
-exports.getAuctions = async (req, res) => {
+exports.getItemStats = async (req, res) => {
     const start = req.query.start ? Number(req.query.start) : yesterdayTimestamp();
     const end = req.query.end ? Number(req.query.end) : Date.now();
 
@@ -15,7 +9,7 @@ exports.getAuctions = async (req, res) => {
 
     if ( start > end ) return res.status(400).send({message: "end must be higher than start"})
 
-    const auctions = await auctionService.findByRealmAndItemId(req.params.realm, req.params.itemId, start, end);
+    const itemStats = await itemStatService.findByRealmAndItemId(req.params.realm, req.params.itemId, start, end);
 
-    res.json(auctions);
+    res.json(itemStats);
 };

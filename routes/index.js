@@ -4,6 +4,7 @@ const constants = require('../config/constants');
 
 const realmsRouter = require('./realm.rte');
 const auctionsRouter = require('./auction.rte');
+const itemStatsRouter = require('./itemstat.rte');
 const initDbRouter = require('./initdb.rte');
 const itemRouter = require('./item.rte');
 const recipeRouter = require('./recipe.rte');
@@ -20,6 +21,7 @@ module.exports = function initRoutes(app) {
     app.use('/api/items', itemRouter);
     app.use('/api/recipes', recipeRouter);
     app.use('/api/auctions', auctionsRouter);
+    app.use('/api/itemstats', itemStatsRouter);
     app.use('/api/initdb', initDbRouter);
     app.use('/', errorMiddleware);
 };

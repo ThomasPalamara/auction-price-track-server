@@ -7,6 +7,10 @@ exports.findAll = () => {
     return Item.find();
 };
 
+exports.findAllBlizzardIds = () => {
+    return Item.find().select('blizzardId -_id');
+};
+
 exports.storeItem = async (itemId) => {
     try {
         const itemPromise = fetchItem(itemId);

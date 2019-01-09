@@ -31,7 +31,7 @@ const recipeSchema = new Schema({
     },
     craft: itemSchema,
     reagents: {
-        type: [itemSchema],
+        type: [ itemSchema ],
         validate: {
             validator: function(value) {
                     return value && value.length > 0;
@@ -44,4 +44,3 @@ const recipeSchema = new Schema({
 const Recipe = mongoose.model('recipe', recipeSchema);
 
 module.exports = Recipe;
-
