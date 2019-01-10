@@ -1,6 +1,14 @@
 {
-  "name": "example-create-react-app-express",
-  "version": "1.0.0",
+  "name": "auction-price-tracker-server",
+  "version": "0.1.0",
+  "description": "API for the Auction Price Tracker website which tracks World Of Warcraft Items' Price",
+  "author": "Thomas Palamara & Ludovic Sinquin",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "9.x"
+  },
   "dependencies": {
     "app-root-path": "^2.1.0",
     "cors": "^2.8.4",
@@ -9,14 +17,13 @@
     "express-query-boolean": "^2.0.0",
     "mongoose": "^5.2.8",
     "morgan": "^1.9.0",
-    "nodemon": "^1.18.3",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
     "swagger-ui-express": "^4.0.2",
     "winston": "^3.0.0",
     "yamljs": "^0.3.0"
   },
-  "scripts": {
-    "start": "node app.js"
+  "devDependencies": {
+    "nodemon": "^1.18.3"
   }
 }
