@@ -7,12 +7,10 @@ const swaggerDocument = YAML.load('./swagger.yaml');
 
 const initDbConnexion = require('./config/db');
 const initRoutes = require('./routes');
-const setupCronJobs = require('./cronjobs');
 
 const app = express();
 
 initDbConnexion();
-setupCronJobs();
 initRoutes(app);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
