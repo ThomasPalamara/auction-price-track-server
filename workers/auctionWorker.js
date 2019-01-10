@@ -1,5 +1,9 @@
+require('dotenv').config();
 const CronJob = require('cron').CronJob;
 const auctionService = require('../services/auction.srv');
+const initDbConnexion = require('./config/db');
+
+initDbConnexion();
 
 console.log("Setting Up auctions' worker");
 
