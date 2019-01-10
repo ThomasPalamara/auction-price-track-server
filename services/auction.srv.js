@@ -70,7 +70,7 @@ const updateLastSavedDate = async (date, realm) => {
 };
 
 const fetchRealmAuctionsUrl = (realm) => {
-    return rp(`${constants.blizzardURL}/auction/data/${realm}?locale=fr_FR&apikey=${constants.apiKey}`, {json: true})
+    return rp(`${constants.blizzardAPIURL}/auction/data/${realm}?locale=fr_FR&apikey=${process.env.BLIZZARD_API_KEY}`, {json: true})
 };
 
 const fetchAuctions = (auctionsUrl) => {

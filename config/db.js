@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
-const constants = require('./constants');
 const winston = require('./winston');
 
 module.exports = function initConnexion() {
     mongoose.Promise = global.Promise;
 
-    mongoose.connect(constants.dbURL, { useNewUrlParser: true, keepAlive: true })
+    mongoose.connect(process.env.DB_STRING, { useNewUrlParser: true, keepAlive: true })
         .then( () => winston.info('Connected to MongoDB') )
         .catch( (error) => {
             winston.error(error.message);
@@ -17,4 +16,3 @@ module.exports = function initConnexion() {
     //     process.exit(1);
     // });
 }
-

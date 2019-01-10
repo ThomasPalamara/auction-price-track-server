@@ -41,11 +41,11 @@ exports.cleanItemCollection = async () => {
 };
 
 const fetchItem = async (itemId) => {
-    return rp(`${constants.blizzardURL}/item/${itemId}?locale=en_GB&apikey=${constants.apiKey}`, { json: true });
+    return rp(`${constants.blizzardAPIURL}/item/${itemId}?locale=en_GB&apikey=${process.env.BLIZZARD_API_KEY}`, { json: true });
 };
 
 const fetchItemFr = async (itemId) => {
-    return rp(`${constants.blizzardURL}/item/${itemId}?locale=fr_FR&apikey=${constants.apiKey}`, { json: true });
+    return rp(`${constants.blizzardAPIURL}/item/${itemId}?locale=fr_FR&apikey=${process.env.BLIZZARD_API_KEY}`, { json: true });
 };
 
 const saveItem = async (item, itemFr) => {

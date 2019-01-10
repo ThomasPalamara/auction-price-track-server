@@ -26,7 +26,7 @@ const removeRealmCollection = () => {
 };
 
 const fetchRealms = () => {
-    return rp(`${constants.blizzardURL}/realm/status?locale=en_GB&apikey=${constants.apiKey}`, {json: true})
+    return rp(`${constants.blizzardAPIURL}/realm/status?locale=en_GB&apikey=${process.env.BLIZZARD_API_KEY}`, {json: true})
 };
 
 const processRealm = async (realm) => {
