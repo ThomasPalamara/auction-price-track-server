@@ -17,6 +17,14 @@ module.exports = function initRoutes(app) {
     app.use(boolParser());
     app.use(morgan(constants.morganFormat));
 
+    app.get('/', function (req, res) {
+        res.redirect('/api')
+    });
+
+    app.get('/api', function (req, res) {
+        res.send('Welcome to the Auction Price Tracker API. To find the API documentation, go to /api/docs');
+    });
+
     app.use('/api/realms', realmsRouter);
     app.use('/api/items', itemRouter);
     app.use('/api/recipes', recipeRouter);
