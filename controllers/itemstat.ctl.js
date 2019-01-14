@@ -1,5 +1,5 @@
 const itemStatService = require('../services/itemstat.srv');
-const { yesterdayTimestamp } = require('../utils/dateUtils');
+const { yesterdayTimestamp } = require('../helpers/dateUtils');
 
 exports.getItemStats = async (req, res) => {
     const start = req.query.start ? Number(req.query.start) : yesterdayTimestamp();

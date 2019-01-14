@@ -1,7 +1,7 @@
 const Recipe = require("../models/recipe");
 const winston = require('../config/winston');
 const recipes = require('../config/recipes');
-const wait = require('../utils/wait');
+const wait = require('../helpers/wait');
 const itemService = require('../services/item.srv');
 
 exports.findAll = () => {

@@ -1,6 +1,5 @@
 const Item = require("../models/item");
-const rp = require('request-promise');
-const constants = require('../config/constants');
+const blizzardAPI = require('../helpers/blizzardAPI');
 const winston = require('../config/winston');
 
 exports.findAll = () => {
@@ -13,8 +12,8 @@ exports.findAllBlizzardIds = () => {
 
 exports.storeItem = async (itemId) => {
     try {
-        const itemPromise = fetchItem(itemId);
-        const itemFrPromise = fetchItemFr(itemId);
+        const itemPromise = blizzardAPI.fetchItem(itemId);
+        const itemFrPromise = blizzardAPI.fetchItemFR(itemId);
 
         const [item, itemFr] = await Promise.all([itemPromise, itemFrPromise]);
 
@@ -38,14 +37,6 @@ exports.findByBlizzardId = async (blizzardId) => {
 
 exports.cleanItemCollection = async () => {
     await Item.remove({});
-};
-
-const fetchItem = async (itemId) => {
-    return rp(`${constants.blizzardAPIURL}/item/${itemId}?locale=en_GB&apikey=${process.env.BLIZZARD_API_KEY}`, { json: true });
-};
-
-const fetchItemFr = async (itemId) => {
-    return rp(`${constants.blizzardAPIURL}/item/${itemId}?locale=fr_FR&apikey=${process.env.BLIZZARD_API_KEY}`, { json: true });
 };
 
 const saveItem = async (item, itemFr) => {

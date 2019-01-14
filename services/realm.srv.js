@@ -1,6 +1,5 @@
 const Realm = require("../models/realm");
-const rp = require('request-promise');
-const constants = require('../config/constants');
+const blizzardAPI = require('../helpers/blizzardAPI');
 const winston = require('../config/winston');
 
 exports.findAll = () => {
@@ -8,7 +7,7 @@ exports.findAll = () => {
 };
 
 exports.initRealmCollection = async () => {
-    const realms = (await fetchRealms()).realms;
+    const realms = (await blizzardAPI.fetchRealms()).realms;
 
     await removeRealmCollection();
 
@@ -25,15 +24,11 @@ const removeRealmCollection = () => {
     return Realm.collection.drop();
 };
 
-const fetchRealms = () => {
-    return rp(`${constants.blizzardAPIURL}/realm/status?locale=en_GB&apikey=${process.env.BLIZZARD_API_KEY}`, {json: true})
-};
-
 const processRealm = async (realm) => {
     try {
         if (realm.locale === "fr_FR") {
             let savedRealm = await saveRealm(realm);
-            winston.info(`Saved realm ${savedRealm.name}`);
+            winston.debug(`Saved realm ${savedRealm.name}`);
 
             return savedRealm;
         }

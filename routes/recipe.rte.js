@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const wrapAsync = require('../utils/wrapasync');
+const wrapAsync = require('../helpers/wrapasync');
 const recipeController = require('../controllers/recipe.ctl');
 
 router.get('/', wrapAsync(recipeController.getRecipes));

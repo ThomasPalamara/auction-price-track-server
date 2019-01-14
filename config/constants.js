@@ -1,5 +1,4 @@
 const constants = {
-    blizzardAPIURL: 'https://eu.api.battle.net/wow',
     morganFormat: '[:date[clf]] :method :url :status :res[content-length] - :response-time ms',
     wowProfessions: [
         'alchemy',

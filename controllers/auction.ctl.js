@@ -1,5 +1,5 @@
 const auctionService = require('../services/auction.srv');
-const { yesterdayTimestamp } = require('../utils/dateUtils');
+const { yesterdayTimestamp } = require('../helpers/dateUtils');
 
 exports.refreshAuctions = async (req, res) => {
     await auctionService.refreshAuctionsData();

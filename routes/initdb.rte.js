@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const wrapAsync = require('../utils/wrapasync');
+const wrapAsync = require('../helpers/wrapasync');
 const initDbController = require('../controllers/initdb.ctl');
 
 router.post('/realms', wrapAsync(initDbController.initRealms));

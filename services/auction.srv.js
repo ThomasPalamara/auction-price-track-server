@@ -1,10 +1,10 @@
 const AuctionData = require("../models/auctionData");
 const AuctionInformation = require("../models/auctionInformation");
-const rp = require('request-promise');
-const constants = require('../config/constants');
+const blizzardAPI = require('../helpers/blizzardAPI');
 const itemService = require('./item.srv');
 const itemStatService = require('./itemstat.srv');
 const realmService = require('./realm.srv');
+const winston = require('../config/winston');
 
 exports.findByRealmAndItemId = (realm, itemId, start, end) => {
     return AuctionData.find({
@@ -21,26 +21,26 @@ exports.refreshAuctionsData = async () => {
     const realms = await realmService.findAll();
 
     for (realm of realms ) {
-        console.log(`updating realm ${realm.slug}...`);
+        winston.info(`updating realm ${realm.slug}...`);
         await fetchAndSaveAuctionsData(realm.slug);
-        console.log(`realm ${realm.slug} finished`);
+        winston.info(`realm ${realm.slug} finished`);
     }
 
-    console.log('All auctions are up to date');
+    winston.info('All auctions are up to date');
 };
 
 const fetchAndSaveAuctionsData = async (realm) => {
     const { lastSaved } = await getLastSavedDate(realm);
 
-    const { url, lastModified } = (await fetchRealmAuctionsUrl(realm)).files[0];
+    const { url, lastModified } = (await blizzardAPI.fetchRealmAuctionsUrl(realm)).files[0];
 
     if( lastSaved.getTime() === lastModified ) {
-        console.log(`Auctions for realm ${realm} are already up to date`);
+        winston.info(`Auctions for realm ${realm} are already up to date`);
 
         return;
     }
 
-    const auctions = (await fetchAuctions(url)).auctions;
+    const auctions = (await blizzardAPI.fetchAuctions(url)).auctions;
 
     const aggregatedAuctions = await aggregateByItem(auctions, realm, lastModified);
 
@@ -67,14 +67,6 @@ const updateLastSavedDate = async (date, realm) => {
     }
 
     return auctionInformation.save();
-};
-
-const fetchRealmAuctionsUrl = (realm) => {
-    return rp(`${constants.blizzardAPIURL}/auction/data/${realm}?locale=fr_FR&apikey=${process.env.BLIZZARD_API_KEY}`, {json: true})
-};
-
-const fetchAuctions = (auctionsUrl) => {
-    return rp(auctionsUrl, {json: true})
 };
 
 const aggregateByItem = async (auctions, realm, timestamp) => {

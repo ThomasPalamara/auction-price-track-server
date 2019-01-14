@@ -2,13 +2,14 @@ require('dotenv').config();
 const CronJob = require('cron').CronJob;
 const auctionService = require('../services/auction.srv');
 const initDbConnexion = require('./config/db');
+const winston = require('../config/winston');
 
 initDbConnexion();
 
-console.log("Setting Up auctions' worker");
+winston.info("Setting Up auctions' worker");
 
-const auctionJob = new CronJob('0 */2 * * *', auctionService.refreshAuctionsData, () => console.log('cron job correctly ran'));
+const auctionJob = new CronJob('0 */2 * * *', auctionService.refreshAuctionsData, () => winston.info('cron job correctly ran'));
 
 auctionJob.start();
 
-console.log(`Next execution at ${auctionJob.nextDates()}`);
+winston.info(`Next run at ${auctionJob.nextDates()}`);
