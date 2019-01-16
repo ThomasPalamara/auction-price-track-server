@@ -8,7 +8,7 @@ initDbConnexion();
 
 winston.info("Setting Up auctions' worker");
 
-const auctionJob = new CronJob('0 */2 * * *', auctionService.refreshAuctionsData, () => winston.info('cron job correctly ran'));
+const auctionJob = new CronJob('0 * * * *', auctionService.refreshAuctionsData, () => winston.info('cron job correctly ran'));
 
 auctionJob.start();
 
