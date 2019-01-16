@@ -18,23 +18,29 @@ exports.findByRealmAndItemId = (realm, itemId, start, end) => {
 };
 
 exports.refreshAuctionsData = async () => {
-    const realms = await realmService.findAll();
+    try{
+        const realms = await realmService.findAll();
 
-    for (realm of realms ) {
-        winston.info(`updating realm ${realm.slug}...`);
-        await fetchAndSaveAuctionsData(realm.slug);
-        winston.info(`realm ${realm.slug} finished`);
+        for (realm of realms ) {
+            winston.info(`updating realm ${realm.slug}...`);
+            await fetchAndSaveAuctionsData(realm.slug);
+            winston.info(`realm ${realm.slug} finished`);
+        }
+
+        winston.info('---------------All auctions are up to date---------------');
+    }
+    catch (error) {
+        winston.error(error);
     }
 
-    winston.info('All auctions are up to date');
 };
 
 const fetchAndSaveAuctionsData = async (realm) => {
-    const { lastSaved } = await getLastSavedDate(realm);
+    const { lastSaved } = await getLastSavedDate(realm) || {}; // || {} prevents an error from occuring when destructuring an undefined value
 
     const { url, lastModified } = (await blizzardAPI.fetchRealmAuctionsUrl(realm)).files[0];
 
-    if( lastSaved.getTime() === lastModified ) {
+    if( lastSaved && lastSaved.getTime() === lastModified ) {
         winston.info(`Auctions for realm ${realm} are already up to date`);
 
         return;
