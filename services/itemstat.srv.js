@@ -33,7 +33,7 @@ exports.computeStats = auctions => {
     const prices = transformToNumberArray(auctions);
 
     const itemCount = prices.length;
-    const mean = Number(simpleStats.mean(prices));
+    const mean = Math.round(simpleStats.mean(prices));
     const median = simpleStats.median(prices);
     const mode = simpleStats.mode(prices);
     const max = simpleStats.max(prices);
