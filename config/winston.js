@@ -10,15 +10,15 @@ const logger = winston.createLogger({
         new winston.transports.Console({
             format: winston.format.simple(),
         }),
-        new winston.transports.File({ 
-            filename: 'logs/server.log',
-            maxsize: 5242880, // 5MB
-            maxFiles: 10,
-            format: winston.format.combine(
-                winston.format.timestamp(),
-                customFormat,
-            ),
-        })
+        // new winston.transports.File({
+        //     filename: 'logs/server.log',
+        //     maxsize: 5242880, // 5MB
+        //     maxFiles: 10,
+        //     format: winston.format.combine(
+        //         winston.format.timestamp(),
+        //         customFormat,
+        //     ),
+        // })
     ]
 });
 
