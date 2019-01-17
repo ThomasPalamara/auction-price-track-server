@@ -194,13 +194,13 @@ paths:
         - in: query
           name: start
           required: false
-          type: integer
-          description: start timestamp parameter for the search. If not specified, it starts 24 hours before the call timestamp
+          type: string
+          description: start date parameter for the search. The string must be in the ISO 8601 format. If not specified, it starts 24 hours before the call timestamp
         - in: query
           name: end
           required: false
-          type: integer
-          description: end timestamp parameter for the search. If not specified, it ends at the call timestamp
+          type: string
+          description: end date parameter for the search. The string must be in the ISO 8601 format. If not specified, it ends at the call timestamp
       operationId: getAuctions
       produces:
         - application/json
@@ -331,13 +331,13 @@ paths:
         - in: query
           name: start
           required: false
-          type: integer
-          description: start timestamp parameter for the search. If not specified, it starts 24 hours before the call timestamp
+          type: string
+          description: start date parameter for the search. The string must be in the ISO 8601 format. If not specified, it starts 24 hours before the call timestamp
         - in: query
           name: end
           required: false
-          type: integer
-          description: end timestamp parameter for the search. If not specified, it ends at the call timestamp
+          type: string
+          description: end date parameter for the search. The string must be in the ISO 8601 format. If not specified, it ends at the call timestamp
       operationId: getItemStats
       produces:
         - application/json

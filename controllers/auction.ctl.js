@@ -1,5 +1,6 @@
+const { isISO8601 } = require('validator');
 const auctionService = require('../services/auction.srv');
-const { yesterdayTimestamp } = require('../helpers/dateUtils');
+const { yesterdayDate } = require('../helpers/dateUtils');
 
 exports.refreshAuctions = async (req, res) => {
     await auctionService.refreshAuctionsData();
@@ -8,10 +9,10 @@ exports.refreshAuctions = async (req, res) => {
 };
 
 exports.getAuctions = async (req, res) => {
-    const start = req.query.start ? Number(req.query.start) : yesterdayTimestamp();
-    const end = req.query.end ? Number(req.query.end) : Date.now();
+    const start = req.query.start || yesterdayDate().toISOString();
+    const end = req.query.end || new Date().toISOString();
 
-    if ( isNaN(start) || isNaN(end) ) return res.status(400).send({message: "start and end parameters must be numbers"})
+    if ( !isISO8601(start, { strict: true }) || !isISO8601(end, { strict: true }) ) return res.status(400).send({message: "start and end parameters must be in ISO 8601 format"})
 
     if ( start > end ) return res.status(400).send({message: "end must be higher than start"})
 

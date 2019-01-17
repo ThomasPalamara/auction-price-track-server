@@ -1,3 +1,3 @@
-exports.yesterdayTimestamp = () => {
-    return Date.now() - 864e5
+exports.yesterdayDate = () => {
+    return new Date(Date.now() - 864e5);
 }
