@@ -4,7 +4,7 @@ const winston = require('./winston');
 module.exports = function initConnexion() {
     mongoose.Promise = global.Promise;
 
-    mongoose.connect(process.env.DB_STRING, { useNewUrlParser: true, keepAlive: true })
+    return mongoose.connect(process.env.DB_STRING, { useNewUrlParser: true, keepAlive: true })
         .then( () => winston.info('Connected to MongoDB') )
         .catch( (error) => {
             winston.error(error.message);

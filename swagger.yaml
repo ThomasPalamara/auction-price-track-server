@@ -389,65 +389,6 @@ paths:
               message:
                 type: string
                 example: Unfortunate things happened
-  /initdb/realms:
-    post:
-      tags:
-        - initdb
-      summary: >-
-        Clean and initialize the realm collection of the Auction Price Tracker's
-        database
-      operationId: initRealms
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Operation successful
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: Initialization of realms finished successfully
-        '500':
-          description: Server broken
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: Unfortunate things happened
-  /initdb/recipes:
-    post:
-      tags:
-        - initdb
-      summary: >-
-        Initialize the recipe and item collections of the Auction Price
-        Tracker's database
-      parameters:
-        - name: cleanitemcollection
-          in: query
-          description: clean the item collection ?
-          type: boolean
-      operationId: initRecipes
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Operation successful
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: Initialization of recipes finished successfully
-        '500':
-          description: Server broken
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: Unfortunate things happened
 definitions:
   Item:
     type: object
