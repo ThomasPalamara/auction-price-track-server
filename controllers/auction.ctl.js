@@ -5,18 +5,27 @@ const { yesterdayDate } = require('../helpers/dateUtils');
 exports.refreshAuctions = async (req, res) => {
     await auctionService.refreshAuctionsData();
 
-    res.json({message: "Auctions up to date"});
+    res.json({ message: 'Auctions up to date' });
 };
 
-exports.getAuctions = async (req, res) => {
-    const start = req.query.start || yesterdayDate().toISOString();
-    const end = req.query.end || new Date().toISOString();
+exports.getAuctions = async ({ params, query }, res) => {
+    const start = query.start || yesterdayDate().toISOString();
+    const end = query.end || new Date().toISOString();
 
-    if ( !isISO8601(start, { strict: true }) || !isISO8601(end, { strict: true }) ) return res.status(400).send({message: "start and end parameters must be in ISO 8601 format"})
+    if (!isISO8601(start, { strict: true }) || !isISO8601(end, { strict: true })) {
+        res.status(400).send({ message: 'start and end parameters must be in ISO 8601 format' });
 
-    if ( start > end ) return res.status(400).send({message: "end must be higher than start"})
+        return;
+    }
 
-    const auctions = await auctionService.findByRealmAndItemId(req.params.realm, req.params.itemId, start, end);
+    if (start > end) {
+        res.status(400).send({ message: 'end must be higher than start' });
+
+        return;
+    }
+
+    const auctions = await auctionService
+        .findByRealmAndItemId(params.realm, params.itemId, start, end);
 
     res.json(auctions);
 };

@@ -5,8 +5,8 @@ module.exports = function initConnexion() {
     mongoose.Promise = global.Promise;
 
     return mongoose.connect(process.env.DB_STRING, { useNewUrlParser: true, keepAlive: true })
-        .then( () => winston.info('Connected to MongoDB') )
-        .catch( (error) => {
+        .then(() => winston.info('Connected to MongoDB'))
+        .catch((error) => {
             winston.error(error.message);
             process.exit(1);
         });
@@ -15,4 +15,4 @@ module.exports = function initConnexion() {
     //     winston.error('Connection to MongoDB lost');
     //     process.exit(1);
     // });
-}
+};

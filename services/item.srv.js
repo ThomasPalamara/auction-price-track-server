@@ -1,14 +1,10 @@
-const Item = require("../models/item");
+const Item = require('../models/item');
 const blizzardAPI = require('../helpers/blizzardAPI');
 const winston = require('../config/winston');
 
-exports.findAll = () => {
-    return Item.find();
-};
+exports.findAll = () => Item.find();
 
-exports.findAllBlizzardIds = () => {
-    return Item.find().select('blizzardId -_id');
-};
+exports.findAllBlizzardIds = () => Item.find().select('blizzardId -_id');
 
 exports.storeItem = async (itemId) => {
     try {
@@ -22,18 +18,14 @@ exports.storeItem = async (itemId) => {
         winston.debug(`Saved item ${savedItem.name_fr}`);
 
         return savedItem;
-    }
-    catch (error) {
+    } catch (error) {
         logItemError(error, itemId);
 
         throw error;
     }
 };
 
-exports.findByBlizzardId = async (blizzardId) => {
-    return Item.findOne({ blizzardId: blizzardId });
-};
-
+exports.findByBlizzardId = blizzardId => Item.findOne({ blizzardId });
 
 exports.cleanItemCollection = async () => {
     await Item.remove({});
@@ -46,7 +38,7 @@ const saveItem = async (item, itemFr) => {
         name_fr: itemFr.name,
     });
 
-    return await itemModel.save();
+    return itemModel.save();
 };
 
 const logItemError = (error, itemId) => {
@@ -55,6 +47,8 @@ const logItemError = (error, itemId) => {
     } else if (error.statusCode === 403) {
         winston.error(`API limits' reached for item ${itemId}`);
     } else {
+        // Error object is not displayed beautifully when using string templates
+        // eslint-disable-next-line prefer-template
         winston.error('Error unknown for item ' + itemId + ' : ' + error);
     }
 };

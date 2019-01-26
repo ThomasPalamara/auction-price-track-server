@@ -23,7 +23,7 @@ const constants = {
         'war scroll',
         'vantus',
         'tome',
-    ]
+    ],
 };
 
 module.exports = constants;

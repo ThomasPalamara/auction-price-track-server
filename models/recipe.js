@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 const constants = require('../config/constants');
+
+const { Schema } = mongoose;
+
 
 const itemSchema = new Schema({
     name: { type: String, required: true },
@@ -23,21 +25,17 @@ const recipeSchema = new Schema({
             lowercase: true,
         }],
         validate: {
-            validator: function(value) {
-                    return value && value.length > 0;
-            },
+            validator: value => value && value.length > 0,
             message: 'A recipe should have atleast one profession',
-        }
+        },
     },
     craft: itemSchema,
     reagents: {
-        type: [ itemSchema ],
+        type: [itemSchema],
         validate: {
-            validator: function(value) {
-                    return value && value.length > 0;
-            },
+            validator: value => value && value.length > 0,
             message: 'A recipe should have atleast one reagent',
-        }
+        },
     },
 });
 
