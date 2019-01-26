@@ -173,7 +173,7 @@ paths:
               message:
                 type: string
                 example: Unfortunate things happened
-  /auctions:
+  /auctions/{realm}/{itemId}:
     get:
       tags:
         - auctions
@@ -183,13 +183,11 @@ paths:
           name: realm
           required: true
           type: string
-          minimum: 1
-          description: the realm to get the auctions from.
+          description: the realm slug to get the auctions from.
         - in: path
           name: itemId
           required: true
           type: integer
-          minimum: 2
           description: the item to get the auctions for.
         - in: query
           name: start
@@ -310,7 +308,7 @@ paths:
               message:
                 type: string
                 example: Unfortunate things happened
-  /itemstats:
+  /itemstats/{realm}/{itemId}:
     get:
       tags:
         - itemstats
@@ -320,13 +318,11 @@ paths:
           name: realm
           required: true
           type: string
-          minimum: 1
-          description: the realm to get the itemstats from.
+          description: the realm slug to get the itemstats from.
         - in: path
           name: itemId
           required: true
           type: integer
-          minimum: 2
           description: the item to get the itemstats for.
         - in: query
           name: start
