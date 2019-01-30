@@ -1,13 +1,11 @@
-const Realm = require("../models/realm");
+const Realm = require('../models/realm');
 const blizzardAPI = require('../helpers/blizzardAPI');
 const winston = require('../config/winston');
 
-exports.findAll = () => {
-    return Realm.find();
-};
+exports.findAll = () => Realm.find();
 
 exports.initRealmCollection = async () => {
-    const realms = (await blizzardAPI.fetchRealms()).realms;
+    const { realms } = (await blizzardAPI.fetchRealms()).realms;
 
     await removeRealmCollection();
 
@@ -20,20 +18,21 @@ exports.initRealmCollection = async () => {
     return Promise.all(realmPromises);
 };
 
-const removeRealmCollection = () => {
-    return Realm.collection.drop();
-};
+const removeRealmCollection = () => Realm.collection.drop();
 
 const processRealm = async (realm) => {
     try {
-        if (realm.locale === "fr_FR") {
-            let savedRealm = await saveRealm(realm);
+        if (realm.locale === 'fr_FR') {
+            const savedRealm = await saveRealm(realm);
             winston.debug(`Saved realm ${savedRealm.name}`);
 
             return savedRealm;
         }
-    }
-    catch (error) {
+
+        return null;
+    } catch (error) {
+        // Error object is not displayed beautifully when using string templates
+        // eslint-disable-next-line prefer-template
         winston.error('Error unknown for realm ' + realm.name + ' : ' + error);
 
         throw new Error('Initialization of realm collection failed');

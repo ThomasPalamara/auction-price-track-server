@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const itemSchema = new Schema({
     name: String,
     name_fr: String,
-    blizzardId: { type : Number , unique : true, required : true },
+    blizzardId: { type: Number, unique: true, required: true },
 });
 
 const Item = mongoose.model('item', itemSchema);

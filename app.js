@@ -1,9 +1,10 @@
 require('dotenv').config();
 const express = require('express');
+const YAML = require('yamljs');
+const swaggerUi = require('swagger-ui-express');
+
 const winston = require('./config/winston');
 
-const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
 
 const initDbConnexion = require('./config/db');
