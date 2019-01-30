@@ -5,15 +5,15 @@ const winston = require('../config/winston');
 exports.findAll = () => Realm.find();
 
 exports.initRealmCollection = async () => {
-    const { realms } = (await blizzardAPI.fetchRealms()).realms;
+    const { realms } = (await blizzardAPI.fetchRealms());
 
     await removeRealmCollection();
 
     const realmPromises = [];
 
-    for (let index = 0; index < realms.length; index++) {
-        realmPromises.push(processRealm(realms[index]));
-    }
+    realms.forEach((realm) => {
+        realmPromises.push(processRealm(realm));
+    });
 
     return Promise.all(realmPromises);
 };

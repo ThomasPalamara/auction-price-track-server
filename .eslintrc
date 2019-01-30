@@ -1,14 +1,18 @@
 {
     "extends": "airbnb-base",
     "rules": {
+        "linebreak-style": "off",
+        "no-use-before-define": "off",
         "indent": [
             "error",
             4
         ],
-        "linebreak-style": "off",
-        "no-plusplus": "off",
-        "no-use-before-define": "off",
-        "no-unused-vars": "warn",
+        "no-plusplus": [
+            "error",
+            {
+                "allowForLoopAfterthoughts": true
+            }
+        ],
         "no-underscore-dangle": [
             "error",
             {

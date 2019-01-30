@@ -3,14 +3,15 @@ const axios = require('axios');
 const axiosInstance = axios.create();
 
 const blizzardAPIURL = 'https://eu.api.blizzard.com/wow';
+
 axiosInstance.interceptors.response.use(
     response => response,
     async (error) => {
         const originalRequest = error.config;
 
         /*
-        '!originalRequest.isRetry' prevents a request loop from happening if
-        authentification keeps failing
+        * '!originalRequest.isRetry' prevents a request loop from happening if
+        * authentification keeps failing
         */
         if (error.response.status === 401 && !originalRequest.isRetry) {
             originalRequest.isRetry = true;
