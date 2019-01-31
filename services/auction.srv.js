@@ -18,17 +18,18 @@ exports.findByRealmAndItemId = (realm, itemId, start, end) => AuctionData.find({
 exports.refreshAuctionsData = async () => {
     try {
         const realms = await realmService.findAll();
-        const promises = [];
+        let realm = null;
 
-        realms.forEach((realm) => {
+        for (let i = 0; i < realms.length; i++) {
+            realm = realms[i];
+
             winston.info(`updating realm ${realm.slug}...`);
-            const promise = fetchAndSaveAuctionsData(realm.slug)
-                .then(() => winston.info(`realm ${realm.slug} finished`));
+            // Auctions are processed synchronously so the RAM limit of heroku is not exceeded
+            // eslint-disable-next-line no-await-in-loop
+            await fetchAndSaveAuctionsData(realm.slug);
+            winston.info(`realm ${realm.slug} finished`);
+        }
 
-            promises.push(promise);
-        });
-
-        await Promise.all(promises);
         winston.info('---------------All auctions are up to date---------------');
     } catch (error) {
         winston.error(error);
