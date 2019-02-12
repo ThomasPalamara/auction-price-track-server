@@ -50,7 +50,7 @@ const fetchAndSaveAuctionsData = async (realm) => {
 
     const { auctions } = await blizzardAPI.fetchAuctions(url);
 
-    const aggregatedAuctions = await aggregateByItem(auctions, realm, lastModified);
+    const aggregatedAuctions = await aggregateByItem(auctions);
 
     await computeAndSaveStats(aggregatedAuctions, realm, lastModified);
 
@@ -59,34 +59,12 @@ const fetchAndSaveAuctionsData = async (realm) => {
 
 const getLastSavedDate = realm => AuctionInformation.findOne({ realm });
 
-const updateLastSavedDate = async (date, realm) => {
-    let auctionInformation = await getLastSavedDate(realm);
-
-    if (auctionInformation) {
-        auctionInformation.lastSaved = date;
-    } else {
-        auctionInformation = new AuctionInformation({
-            realm,
-            lastSaved: date,
-        });
-    }
-
-    return auctionInformation.save();
-};
-
-const aggregateByItem = async (auctions, realm, timestamp) => {
-    const aggregatedAuctions = {};
-
-    const blizzardIds = await itemService.findAllBlizzardIds();
-    const itemIds = formatIds(blizzardIds);
+const aggregateByItem = async (auctions) => {
+    const aggregatedAuctions = await initAggregatedAuctionsObject();
 
     auctions.forEach((auction) => {
-        if (auction.buyout > 0 && itemIds.includes(auction.item)) {
+        if (auction.buyout > 0 && aggregatedAuctions[auction.item]) {
             const unitPrice = Math.round(auction.buyout / auction.quantity);
-
-            if (!aggregatedAuctions[auction.item]) {
-                aggregatedAuctions[auction.item] = [];
-            }
 
             const existingAuctionData = aggregatedAuctions[auction.item]
                 .find(auctionData => auctionData.unitPrice === unitPrice);
@@ -102,10 +80,30 @@ const aggregateByItem = async (auctions, realm, timestamp) => {
         }
     });
 
-    // At the moment, auctions are stored but we don't know yet if it will be used
-    saveAuctions(aggregatedAuctions, realm, timestamp);
+    return aggregatedAuctions;
+};
+
+const initAggregatedAuctionsObject = async () => {
+    const aggregatedAuctions = {};
+
+    const blizzardIds = await itemService.findAllBlizzardIds();
+    const itemIds = formatIds(blizzardIds);
+
+    itemIds.forEach((itemId) => {
+        aggregatedAuctions[itemId] = [];
+    });
 
     return aggregatedAuctions;
+};
+
+const formatIds = (blizzardIds) => {
+    const formatedResult = [];
+
+    blizzardIds.forEach(({ blizzardId }) => {
+        formatedResult.push(blizzardId);
+    });
+
+    return formatedResult;
 };
 
 const computeAndSaveStats = async (aggregatedAuctions, realm, timestamp) => {
@@ -120,29 +118,17 @@ const computeAndSaveStats = async (aggregatedAuctions, realm, timestamp) => {
     return Promise.all(promises);
 };
 
-const saveAuctions = (aggregatedAuctions, realm, timestamp) => {
-    Object.entries(aggregatedAuctions).forEach(([itemId, itemAuctions]) => {
-        saveAuction(itemId, itemAuctions, realm, timestamp);
-    });
-};
+const updateLastSavedDate = async (date, realm) => {
+    let auctionInformation = await getLastSavedDate(realm);
 
-const saveAuction = (itemId, auctionData, realm, timestamp) => {
-    const auctionDataModel = new AuctionData({
-        itemId,
-        auctions: auctionData,
-        timestamp,
-        realm,
-    });
+    if (auctionInformation) {
+        auctionInformation.lastSaved = date;
+    } else {
+        auctionInformation = new AuctionInformation({
+            realm,
+            lastSaved: date,
+        });
+    }
 
-    auctionDataModel.save();
-};
-
-const formatIds = (blizzardIds) => {
-    const formatedResult = [];
-
-    blizzardIds.forEach(({ blizzardId }) => {
-        formatedResult.push(blizzardId);
-    });
-
-    return formatedResult;
+    return auctionInformation.save();
 };

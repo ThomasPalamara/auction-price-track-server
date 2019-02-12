@@ -34,6 +34,22 @@ exports.computeStats = (auctions) => {
     const prices = transformToNumberArray(auctions);
 
     const itemCount = prices.length;
+
+    if (!itemCount) { // No auctions
+        return {
+            itemCount: 0,
+            mean: null,
+            median: null,
+            max: null,
+            min: null,
+            mode: null,
+            percentile5: null,
+            percentile25: null,
+            percentile75: null,
+            percentile95: null,
+        };
+    }
+
     const mean = Math.round(simpleStats.mean(prices));
     const median = simpleStats.median(prices);
     const mode = simpleStats.mode(prices);
@@ -62,7 +78,7 @@ exports.computeStats = (auctions) => {
 
 /**
  * Transform the auctions' array into an array of Number containing all the prices
- * @param auctions array of auctions. The parameter must be an array objects which
+ * @param auctions array of auctions. The parameter must be an array of objects which
  *  all have the properties unitPrice and quantity
  * @return a simple number array containing all prices
  */
