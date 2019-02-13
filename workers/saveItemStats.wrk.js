@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { CronJob } = require('cron');
 const auctionService = require('../services/auction.srv');
-const initDbConnexion = require('../config/db');
+const initDbConnexion = require('../db/dbConnection');
 const winston = require('../config/winston');
 
 initDbConnexion();

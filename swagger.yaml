@@ -173,141 +173,6 @@ paths:
               message:
                 type: string
                 example: Unfortunate things happened
-  /auctions/{realm}/{itemId}:
-    get:
-      tags:
-        - auctions
-      summary: Gets all auctions for a specific item in a realm
-      parameters:
-        - in: path
-          name: realm
-          required: true
-          type: string
-          description: the realm slug to get the auctions from.
-        - in: path
-          name: itemId
-          required: true
-          type: integer
-          description: the item to get the auctions for.
-        - in: query
-          name: start
-          required: false
-          type: string
-          description: start date parameter for the search. The string must be in the ISO 8601 format. If not specified, it starts 24 hours before the call timestamp
-        - in: query
-          name: end
-          required: false
-          type: string
-          description: end date parameter for the search. The string must be in the ISO 8601 format. If not specified, it ends at the call timestamp
-      operationId: getAuctions
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Operation successful
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/AuctionData'
-            example:
-              - _id: 5c349c376acb5d094ce19c0d
-                itemId: 152507
-                auctions:
-                  - _id: 5c349c376acb5d094ce19c19
-                    unitPrice: 337000
-                    quantity: 36
-                  - _id: 5c349c376acb5d094ce19c18
-                    unitPrice: 335000
-                    quantity: 5
-                  - _id: 5c349c376acb5d094ce19c17
-                    unitPrice: 338000
-                    quantity: 3
-                  - _id: 5c349c376acb5d094ce19c16
-                    unitPrice: 385110
-                    quantity: 80
-                  - _id: 5c349c376acb5d094ce19c15
-                    unitPrice: 318182
-                    quantity: 55
-                  - _id: 5c349c376acb5d094ce19c14
-                    unitPrice: 382500
-                    quantity: 180
-                  - _id: 5c349c376acb5d094ce19c13
-                    unitPrice: 350000
-                    quantity: 30
-                  - _id: 5c349c376acb5d094ce19c12
-                    unitPrice: 336000
-                    quantity: 13
-                  - _id: 5c349c376acb5d094ce19c11
-                    unitPrice: 337990
-                    quantity: 11
-                  - _id: 5c349c376acb5d094ce19c10
-                    unitPrice: 998999
-                    quantity: 800
-                  - _id: 5c349c376acb5d094ce19c0f
-                    unitPrice: 339000
-                    quantity: 19
-                  - _id: 5c349c376acb5d094ce19c0e
-                    unitPrice: 399999
-                    quantity: 200
-                timestamp: '2019-01-08T12:07:32.000Z'
-                realm: chogall
-                __v: 0
-              - _id: 5c349f38e5c26834a4494183
-                itemId: 152507
-                auctions:
-                  - _id: 5c349f38e5c26834a4494191
-                    unitPrice: 337000
-                    quantity: 36
-                  - _id: 5c349f38e5c26834a4494190
-                    unitPrice: 335000
-                    quantity: 5
-                  - _id: 5c349f38e5c26834a449418f
-                    unitPrice: 317000
-                    quantity: 100
-                  - _id: 5c349f38e5c26834a449418e
-                    unitPrice: 338000
-                    quantity: 3
-                  - _id: 5c349f38e5c26834a449418d
-                    unitPrice: 385110
-                    quantity: 80
-                  - _id: 5c349f38e5c26834a449418c
-                    unitPrice: 318182
-                    quantity: 55
-                  - _id: 5c349f38e5c26834a449418b
-                    unitPrice: 382500
-                    quantity: 180
-                  - _id: 5c349f38e5c26834a449418a
-                    unitPrice: 316000
-                    quantity: 10
-                  - _id: 5c349f38e5c26834a4494189
-                    unitPrice: 350000
-                    quantity: 30
-                  - _id: 5c349f38e5c26834a4494188
-                    unitPrice: 336000
-                    quantity: 13
-                  - _id: 5c349f38e5c26834a4494187
-                    unitPrice: 337990
-                    quantity: 11
-                  - _id: 5c349f38e5c26834a4494186
-                    unitPrice: 998999
-                    quantity: 800
-                  - _id: 5c349f38e5c26834a4494185
-                    unitPrice: 339000
-                    quantity: 19
-                  - _id: 5c349f38e5c26834a4494184
-                    unitPrice: 399999
-                    quantity: 200
-                timestamp: '2019-01-08T13:00:32.000Z'
-                realm: chogall
-                __v: 0
-        '500':
-          description: Server broken
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: Unfortunate things happened
   /itemstats/{realm}/{itemId}:
     get:
       tags:
@@ -328,7 +193,7 @@ paths:
           name: start
           required: false
           type: string
-          description: start date parameter for the search. The string must be in the ISO 8601 format. If not specified, it starts 24 hours before the call timestamp
+          description: start date parameter for the search. The string must be in the ISO 8601 format. If not specified, it starts 28 days before the call day at midnight central europe timezone
         - in: query
           name: end
           required: false
@@ -345,37 +210,69 @@ paths:
             items:
               $ref: '#/definitions/ItemStat'
             example:
-              - _id: 5c349c396acb5d094ce19d62
-                itemId: 152507
-                minPrice: 318182
-                averagePrice: 723607.3324022347
-                maxPrice: 998999
-                timestamp: '2019-01-08T12:07:32.000Z'
-                realm: chogall
+              - _id: 5c631449362bce29f8c0d337
+                itemId: 152505
+                itemCount: 6212
+                mean: 945108
+                median: 449998
+                max: 3000000
+                min: 379999
+                mode: 449998
+                percentile5: 449997
+                percentile25: 451499
+                percentile75: 454848
+                percentile95: 3000000
+                timestamp: '2019-02-12T18:25:14.000Z'
+                weekday: Tuesday
+                realm: sargeras
                 __v: 0
-              - _id: 5c349f39e5c26834a44942dc
-                itemId: 152507
-                minPrice: 316000
-                averagePrice: 694595.1361867704
-                maxPrice: 998999
-                timestamp: '2019-01-08T13:00:32.000Z'
-                realm: chogall
+              - _id: 5c6320b8362bce29f8c0da18
+                itemId: 152505
+                itemCount: 8675
+                mean: 1040267
+                median: 449998
+                max: 3000000
+                min: 419000
+                mode: 449997
+                percentile5: 449997
+                percentile25: 453000
+                percentile75: 454848
+                percentile95: 3000000
+                timestamp: '2019-02-12T19:35:14.000Z'
+                weekday: Tuesday
+                realm: sargeras
                 __v: 0
-              - _id: 5c34baf3673b7618dcb5cca7
-                itemId: 152507
-                minPrice: 336000
-                averagePrice: 695249.5205047319
-                maxPrice: 998999
-                timestamp: '2019-01-08T14:46:32.000Z'
-                realm: chogall
+              - _id: 5c6330af362bce29f8c0e1c1
+                itemId: 152505
+                itemCount: 8775
+                mean: 1033540
+                median: 449998
+                max: 3000000
+                min: 419000
+                mode: 449997
+                percentile5: 449997
+                percentile25: 453000
+                percentile75: 454848
+                percentile95: 3000000
+                timestamp: '2019-02-12T20:45:14.000Z'
+                weekday: Tuesday
+                realm: sargeras
                 __v: 0
-              - _id: 5c34d711673b7618dcb61ff3
-                itemId: 152507
-                minPrice: 336000
-                averagePrice: 695249.5205047319
-                maxPrice: 998999
-                timestamp: '2019-01-08T16:32:32.000Z'
-                realm: chogall
+              - _id: 5c6359ac3b252b30fcdbc686
+                itemId: 152505
+                itemCount: 8753
+                mean: 1033853
+                median: 449998
+                max: 3000000
+                min: 399900
+                mode: 449997
+                percentile5: 449997
+                percentile25: 454848
+                percentile75: 3000000
+                percentile95: 3000000
+                timestamp: '2019-02-12T23:05:14.000Z'
+                weekday: Wednesday
+                realm: sargeras
                 __v: 0
         '500':
           description: Server broken
@@ -488,29 +385,6 @@ definitions:
         type: integer
       averagePrice:
         type: integer
-      timestamp:
-        type: string
-        description: "A timestamp in the ISO Format"
-      realm:
-        type: string
-      __v:
-        type: integer
-  AuctionData:
-    type: object
-    properties:
-      _id:
-        type: string
-      itemId:
-        type: integer
-      auctions:
-        type: array
-        items:
-          type: object
-          properties:
-            unitPrice:
-              type: integer
-            quantity:
-              type: integer
       timestamp:
         type: string
         description: "A timestamp in the ISO Format"

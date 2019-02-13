@@ -1,7 +1,7 @@
 const morgan = require('morgan');
 const cors = require('cors');
 const boolParser = require('express-query-boolean');
-const constants = require('../config/constants');
+const { morganFormat } = require('../config/constants');
 
 const realmsRouter = require('./realm.rte');
 const auctionsRouter = require('./auction.rte');
@@ -15,7 +15,7 @@ const errorMiddleware = require('../middlewares/error.mw');
 module.exports = function initRoutes(app) {
     app.use(cors());
     app.use(boolParser());
-    app.use(morgan(constants.morganFormat));
+    app.use(morgan(morganFormat));
 
     app.get('/', (req, res) => res.redirect('/api'));
 

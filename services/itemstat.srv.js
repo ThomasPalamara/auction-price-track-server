@@ -1,5 +1,6 @@
 const simpleStats = require('simple-statistics');
 const ItemStat = require('../models/itemStat');
+const { weekdays } = require('../config/constants');
 
 const percentiles = [0.05, 0.25, 0.75, 0.95];
 
@@ -14,10 +15,13 @@ exports.findByRealmAndItemId = (realm, itemId, start, end) => ItemStat.find({
 
 
 exports.saveItemStat = (itemId, itemStat, realm, timestamp) => {
+    const weekday = weekdays[new Date(timestamp).getDay()];
+
     const itemStatModel = new ItemStat({
         itemId,
         ...itemStat,
         timestamp,
+        weekday,
         realm,
     });
 
@@ -38,15 +42,15 @@ exports.computeStats = (auctions) => {
     if (!itemCount) { // No auctions
         return {
             itemCount: 0,
-            mean: null,
-            median: null,
-            max: null,
-            min: null,
-            mode: null,
-            percentile5: null,
-            percentile25: null,
-            percentile75: null,
-            percentile95: null,
+            mean: 0,
+            median: 0,
+            max: 0,
+            min: 0,
+            mode: 0,
+            percentile5: 0,
+            percentile25: 0,
+            percentile75: 0,
+            percentile95: 0,
         };
     }
 

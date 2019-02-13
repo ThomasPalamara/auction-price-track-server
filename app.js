@@ -7,7 +7,7 @@ const winston = require('./config/winston');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 
-const initDbConnexion = require('./config/db');
+const initDbConnexion = require('./db/dbConnection');
 const initRoutes = require('./routes');
 
 const app = express();

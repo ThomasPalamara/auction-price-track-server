@@ -1,7 +1,7 @@
 require('dotenv').config();
 const realmService = require('../services/realm.srv');
 const recipeService = require('../services/recipe.srv');
-const initDbConnexion = require('../config/db');
+const initDbConnexion = require('./dbConnection');
 const winston = require('../config/winston');
 
 (async () => {

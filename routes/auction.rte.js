@@ -5,6 +5,4 @@ const auctionController = require('../controllers/auction.ctl');
 // TODO delete
 router.post('/', wrapAsync(auctionController.refreshAuctions));
 
-router.get('/:realm/:itemId', wrapAsync(auctionController.getAuctions));
-
 module.exports = router;

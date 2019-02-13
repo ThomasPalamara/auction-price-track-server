@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const constants = require('../config/constants');
+const { recipeTypes, wowProfessions } = require('../config/constants');
 
 const { Schema } = mongoose;
 
@@ -15,13 +15,13 @@ const recipeSchema = new Schema({
     isCustom: { type: Boolean, default: false },
     type: {
         type: String,
-        enum: constants.recipeTypes,
+        enum: recipeTypes,
         lowercase: true,
     },
     professions: {
         type: [{
             type: String,
-            enum: constants.wowProfessions,
+            enum: wowProfessions,
             lowercase: true,
         }],
         validate: {

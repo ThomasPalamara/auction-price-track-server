@@ -24,6 +24,15 @@ const constants = {
         'vantus',
         'tome',
     ],
+    weekdays: [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+    ],
 };
 
 module.exports = constants;
