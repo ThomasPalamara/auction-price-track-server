@@ -193,7 +193,7 @@ paths:
           name: start
           required: false
           type: string
-          description: start date parameter for the search. The string must be in the ISO 8601 format. If not specified, it starts 28 days before the call day at midnight central europe timezone
+          description: start date parameter for the search. The string must be in the ISO 8601 format. If not specified, it starts 28 days before the call day at midnight UTC
         - in: query
           name: end
           required: false

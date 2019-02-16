@@ -1,25 +1,26 @@
-const { isISO8601 } = require('validator');
+const moment = require('moment');
 const itemStatService = require('../services/itemstat.srv');
-const { get28DayOldDate } = require('../helpers/dateUtils');
 
 exports.getItemStats = async ({ params, query }, res) => {
-    const start = query.start || get28DayOldDate().toISOString();
-    const end = query.end || new Date().toISOString();
+    const startTime = query.start ? moment(query.start, moment.ISO_8601) : moment.utc()
+        .subtract(28, 'days')
+        .startOf('day');
+    const endTime = query.end ? moment(query.end, moment.ISO_8601) : moment();
 
-    if (!isISO8601(start, { strict: true }) || !isISO8601(end, { strict: true })) {
-        res.status(400).send({ message: 'start and end parameters must be in ISO 8601 format' });
+    if (!startTime.isValid() || !endTime.isValid()) {
+        res.status(400).send({ message: 'start and end parameters must be valid dates in ISO 8601 format' });
 
         return;
     }
 
-    if (start > end) {
+    if ((startTime).isAfter(endTime)) {
         res.status(400).send({ message: 'end must be higher than start' });
 
         return;
     }
 
     const itemStats = await itemStatService
-        .findByRealmAndItemId(params.realm, params.itemId, start, end);
+        .findByRealmAndItemId(params.realm, params.itemId, startTime.toDate(), endTime.toDate());
 
     res.json(itemStats);
 };

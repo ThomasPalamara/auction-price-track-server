@@ -1,7 +1,6 @@
-exports.get28DayOldDate = () => {
-    let date = new Date(Date.now() - (28 * 24 * 60 * 60 * 1000));
+const moment = require('moment');
 
-    date = new Date(date.setHours(0, 0, 0, 0)); // Set time to midnight
-
-    return date;
-};
+exports.roundToNearestHour = date => moment(date)
+    .add(30, 'minutes')
+    .startOf('hour')
+    .toDate();

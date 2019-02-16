@@ -16,6 +16,7 @@ const itemStatSchema = new Schema({
     percentile75: { type: Number, required: true },
     percentile95: { type: Number, required: true },
     timestamp: { type: Date, required: true },
+    roundedTimestamp: { type: Date, required: true },
     weekday: {
         type: String,
         enum: weekDays,

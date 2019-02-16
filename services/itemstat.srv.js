@@ -1,26 +1,30 @@
+const moment = require('moment');
 const simpleStats = require('simple-statistics');
+const { roundToNearestHour } = require('../helpers/dateUtils');
 const ItemStat = require('../models/itemStat');
 const { weekdays } = require('../config/constants');
 
 const percentiles = [0.05, 0.25, 0.75, 0.95];
 
-exports.findByRealmAndItemId = (realm, itemId, start, end) => ItemStat.find({
+exports.findByRealmAndItemId = (realm, itemId, startTime, endTime) => ItemStat.find({
     realm,
     itemId,
     timestamp: {
-        $gte: start,
-        $lte: end,
+        $gte: startTime,
+        $lte: endTime,
     },
 });
 
 
 exports.saveItemStat = (itemId, itemStat, realm, timestamp) => {
-    const weekday = weekdays[new Date(timestamp).getDay()];
+    const weekday = weekdays[moment(timestamp).day()];
+    const roundedTimestamp = roundToNearestHour(timestamp);
 
     const itemStatModel = new ItemStat({
         itemId,
         ...itemStat,
         timestamp,
+        roundedTimestamp,
         weekday,
         realm,
     });

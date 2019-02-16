@@ -6,12 +6,12 @@ const itemStatService = require('./itemstat.srv');
 const realmService = require('./realm.srv');
 const winston = require('../config/winston');
 
-exports.findByRealmAndItemId = (realm, itemId, start, end) => AuctionData.find({
+exports.findByRealmAndItemId = (realm, itemId, startTime, endTime) => AuctionData.find({
     realm,
     itemId,
     timestamp: {
-        $gte: start,
-        $lte: end,
+        $gte: startTime,
+        $lte: endTime,
     },
 });
 
@@ -42,6 +42,7 @@ const fetchAndSaveAuctionsData = async (realm) => {
 
     const { url, lastModified } = (await blizzardAPI.fetchRealmAuctionsUrl(realm)).files[0];
 
+    // the Blizzard API sends the lastModified date as Unix Timestamp in  millisecondes
     if (lastSaved && lastSaved.getTime() === lastModified) {
         winston.info(`Auctions for realm ${realm} are already up to date`);
 
