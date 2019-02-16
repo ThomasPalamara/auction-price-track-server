@@ -379,16 +379,44 @@ definitions:
         type: string
       itemId:
         type: integer
-      minPrice:
+      itemCount:
         type: integer
-      maxPrice:
+      mean:
         type: integer
-      averagePrice:
+      median:
+        type: integer
+      max:
+        type: integer
+      min:
+        type: integer
+      mode:
+        type: integer
+      percentile5:
+        type: integer
+      percentile25:
+        type: integer
+      percentile75:
+        type: integer
+      percentile95:
         type: integer
       timestamp:
         type: string
-        description: "A timestamp in the ISO Format"
+        description: "The timestamp in the ISO Format"
+      roundedTimestamp:
+        type: string
+        description: "Rounded timestamp to the nearest hour in the ISO Format"
+      weekday:
+        type: string
+        enum:
+          - Monday
+          - Tuesday
+          - Wednesday
+          - Thursday
+          - Friday
+          - Saturday
+          - Sunday
       realm:
         type: string
+        description: "Realm's slug"
       __v:
         type: integer
