@@ -1,3 +1,3 @@
 web: node app.js
-worker: node workers/itemStats.wrk.js
+worker: node workers/itemstat.wrk.js
 initdb: node db/initdb.js cleanItemCollection=true
