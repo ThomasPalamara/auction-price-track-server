@@ -2,7 +2,8 @@ const moment = require('moment');
 const simpleStats = require('simple-statistics');
 const { roundToNearestHour } = require('../helpers/dateUtils');
 const ItemStat = require('../models/itemStat');
-const { weekdays } = require('../config/constants');
+const { weekdays, retentionPeriod } = require('../config/constants');
+const winston = require('../config/winston');
 
 const percentiles = [0.05, 0.25, 0.75, 0.95];
 
@@ -30,6 +31,25 @@ exports.saveItemStat = (itemId, itemStat, realm, timestamp) => {
     });
 
     return itemStatModel.save();
+};
+
+exports.deleteOldItemStats = async () => {
+    try {
+        const timeThreshold = moment.utc()
+            .subtract(retentionPeriod, 'days')
+            .startOf('day')
+            .toDate();
+
+        const { deletedCount } = await ItemStat.deleteMany({
+            timestamp: {
+                $lte: timeThreshold,
+            },
+        });
+
+        winston.info(`deleted ${deletedCount} ItemStats document(s)`);
+    } catch (error) {
+        winston.error(error);
+    }
 };
 
 /**

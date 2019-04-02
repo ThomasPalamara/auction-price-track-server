@@ -1,5 +1,6 @@
 const constants = {
     morganFormat: '[:date[clf]] :method :url :status :res[content-length] - :response-time ms',
+    retentionPeriod: 15, // Number of days the item stats are stored for
     wowProfessions: [
         'alchemy',
         'blacksmithing',
