@@ -9,16 +9,12 @@ initDbConnexion();
 
 winston.info('Setting Up worker : computeAndSaveItemStats');
 
-const saveStatsJob = new CronJob('0 * * * *', auctionService.refreshAuctionsData);
-
-saveStatsJob.start();
+const saveStatsJob = new CronJob('0 * * * *', auctionService.refreshAuctionsData, null, true, 'Europe/Paris');
 
 winston.info(`Next run at ${saveStatsJob.nextDates()}`);
 
 winston.info('Setting Up worker deleteOldItemStats');
 
-const deleteOldStatsJob = new CronJob('30 2 * * *', itemStatService.deleteOldItemStats);
-
-deleteOldStatsJob.start();
+const deleteOldStatsJob = new CronJob('30 2 * * *', itemStatService.deleteOldItemStats, null, true, 'Europe/Paris');
 
 winston.info(`Next run at ${deleteOldStatsJob.nextDates()}`);
