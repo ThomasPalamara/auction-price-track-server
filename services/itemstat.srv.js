@@ -7,7 +7,7 @@ const winston = require('../config/winston');
 
 const percentiles = [0.05, 0.25, 0.75, 0.95];
 
-exports.findByRealmAndItemId = (realm, itemId, startTime, endTime) => ItemStat.find({
+exports.findByRealmAndItemIdFilteredByTime = (realm, itemId, startTime, endTime) => ItemStat.find({
     realm,
     itemId,
     timestamp: {
