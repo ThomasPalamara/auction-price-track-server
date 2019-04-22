@@ -46,7 +46,7 @@ const fetchAndSaveAuctionsData = async (realm) => {
 
     // the Blizzard API sends the lastModified date as Unix Timestamp in  millisecondes
     if (lastSaved && lastSaved.getTime() === lastModified) {
-        winston.info(`Auctions for realm ${realm} are already up to date`);
+        winston.debug(`Auctions for realm ${realm} are already up to date`);
 
         return null;
     }

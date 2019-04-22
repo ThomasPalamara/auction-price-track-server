@@ -4,7 +4,7 @@ const winston = require('winston');
 //     .printf(({ timestamp, level, message }) => `${timestamp} - ${level}: ${message}`);
 
 const logger = winston.createLogger({
-    level: 'debug',
+    level: process.env.LOG_LEVEL,
     transports: [
         new winston.transports.Console({
             format: winston.format.simple(),
