@@ -1,8 +1,7 @@
 const moment = require('moment');
 const simpleStats = require('simple-statistics');
-const { roundToNearestHour } = require('../helpers/dateUtils');
 const ItemStat = require('../models/itemStat');
-const { weekdays, retentionPeriod } = require('../config/constants');
+const { retentionPeriod } = require('../config/constants');
 const winston = require('../config/winston');
 
 const percentiles = [0.05, 0.25, 0.75, 0.95];
@@ -18,15 +17,10 @@ exports.findByRealmAndItemIdFilteredByTime = (realm, itemId, startTime, endTime)
 
 
 exports.saveItemStat = (itemId, itemStat, realm, timestamp) => {
-    const weekday = weekdays[moment(timestamp).day()];
-    const roundedTimestamp = roundToNearestHour(timestamp);
-
     const itemStatModel = new ItemStat({
         itemId,
         ...itemStat,
         timestamp,
-        roundedTimestamp,
-        weekday,
         realm,
     });
 
@@ -70,7 +64,6 @@ exports.computeStats = (auctions) => {
             median: 0,
             max: 0,
             min: 0,
-            mode: 0,
             percentile5: 0,
             percentile25: 0,
             percentile75: 0,
@@ -80,7 +73,6 @@ exports.computeStats = (auctions) => {
 
     const mean = Math.round(simpleStats.mean(prices));
     const median = simpleStats.median(prices);
-    const mode = simpleStats.mode(prices);
     const max = simpleStats.max(prices);
     const min = simpleStats.min(prices);
     const [
@@ -96,7 +88,6 @@ exports.computeStats = (auctions) => {
         median,
         max,
         min,
-        mode,
         percentile5,
         percentile25,
         percentile75,
