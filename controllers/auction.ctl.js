@@ -1,7 +1,7 @@
-const auctionService = require('../services/auction.srv');
+const auctionService = require("../services/auction.srv");
 
 exports.refreshAuctions = async (req, res) => {
-    await auctionService.refreshAuctionsData();
+  await auctionService.refreshAuctionsData();
 
-    res.json({ message: 'Auctions up to date' });
+  res.json({ message: "Auctions up to date" });
 };

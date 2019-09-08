@@ -1,7 +1,7 @@
-const itemService = require('../services/item.srv');
+const itemService = require("../services/item.srv");
 
 exports.getItems = async (req, res) => {
-    const items = await itemService.findAll();
+  const items = await itemService.findAll();
 
-    res.json(items);
+  res.json(items);
 };

@@ -1,7 +1,7 @@
-const realmService = require('../services/realm.srv');
+const realmService = require("../services/realm.srv");
 
 exports.getRealms = async (req, res) => {
-    const realms = await realmService.findAll();
+  const realms = await realmService.findAll();
 
-    res.json(realms);
+  res.json(realms);
 };

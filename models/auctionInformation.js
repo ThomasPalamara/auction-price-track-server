@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
 const auctionInformation = new Schema({
-    lastSaved: { type: Date, required: true },
-    realm: { type: String, unique: true, required: true },
+  lastSaved: { type: Date, required: true },
+  realm: { type: String, unique: true, required: true }
 });
 
-const AuctionInformation = mongoose.model('auctioninfo', auctionInformation);
+const AuctionInformation = mongoose.model("auctioninfo", auctionInformation);
 
 module.exports = AuctionInformation;

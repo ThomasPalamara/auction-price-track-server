@@ -1,25 +1,19 @@
 {
-    "extends": "airbnb-base",
-    "rules": {
-        "linebreak-style": "off",
-        "no-use-before-define": "off",
-        "indent": [
-            "error",
-            4
-        ],
-        "no-plusplus": [
-            "error",
-            {
-                "allowForLoopAfterthoughts": true
-            }
-        ],
-        "no-underscore-dangle": [
-            "error",
-            {
-                "allow": [
-                    "_id"
-                ]
-            }
-        ]
-    }
+  "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "rules": {
+    "linebreak-style": "off",
+    "no-use-before-define": "off",
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "no-underscore-dangle": [
+      "error",
+      {
+        "allow": ["_id"]
+      }
+    ]
+  }
 }

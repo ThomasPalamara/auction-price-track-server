@@ -1,7 +1,7 @@
-const router = require('express').Router();
-const wrapAsync = require('../helpers/wrapasync');
-const realmController = require('../controllers/realm.ctl');
+const router = require("express").Router();
+const wrapAsync = require("../helpers/wrapasync");
+const realmController = require("../controllers/realm.ctl");
 
-router.get('/', wrapAsync(realmController.getRealms));
+router.get("/", wrapAsync(realmController.getRealms));
 
 module.exports = router;

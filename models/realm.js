@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
 const realmSchema = new Schema({
-    slug: { type: String, unique: true, required: true },
-    name: { type: String, unique: true, required: true },
+  slug: { type: String, unique: true, required: true },
+  name: { type: String, unique: true, required: true }
 });
 
-const Realm = mongoose.model('realm', realmSchema);
+const Realm = mongoose.model("realm", realmSchema);
 
 module.exports = Realm;
